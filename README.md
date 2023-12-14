@@ -30,7 +30,7 @@ gulp dev
 | scss:compile | - | scss을 css로 컴파일합니다.
 | ts:compile | - | .ts을 .js로 컴파일합니다.
 | **compile** | html:compile,  scss:compile,  ts:compile | 리소스 들이 컴파일 됩니다.
-| lib:copy | - | .ts을 .js로 컴파일합니다.
+| lib:copy | - | 라이브러리 파일들을 카피합니다.( ex : ./src/assets/lib )
 | server:dev | - | 임시폴더(ex : .pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
 | **dev** | lib:copy,  compile,  server:dev | 개발환경으로 시작합니다.
 
@@ -45,12 +45,12 @@ gulp : 이 시스템에서 스크립트를 실행할 수 없으므로 *** 파일
     + CategoryInfo          : 보안 오류: (:) [], PSSecurityException
     + FullyQualifiedErrorId : UnauthorizedAccess
 ```
-powershell 을 **"관리자 권한으로 실행"** 해서, 아래의 부분을 넣고 "y"을 넣어주면 될거예요.
-```powershell
-Set-ExecutionPolicy RemoteSigned
-```
+1. 검색에 powershell 을 찾고, **"관리자 권한으로 실행"** 을 눌러주세요.
+2. ```Set-ExecutionPolicy RemoteSigned```을 입력하시고 엔터.
+3. "y" 하시고 엔터 하시면 됩니다.
+
 ### Q. intelliJ (또는 Webstorm) 에서 안되요.
-일단 기준은 vscode을 기준으로 만들어 졌고... 사실 확인 안 해봤어요.
+일단 기준은 vscode을 기준으로 만들어 졌고... 사실 확인 안 해봤어요.   
 오류 상황을 보내주시면 확인해볼께요.
 
 ### Q. ```** vulnerabilities (* moderate, ** high)``` 이런식으로 나와요.
@@ -64,8 +64,7 @@ CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래�
 ## 참고하세요.
 ### typescript(.ts)의 import 
 본 프로젝트에서 ".src/" 하위의 typescript(.ts) 의 import는 기존과 다릅니다.  
-본래는 ts파일의 export 된 객체(모듈)을 가져와 사용하는 개념이지만,  
-번들링을 하지 않는 특성과, 브라우저 자체에서의 import 기능을 쓰지 않기 때문에, 번들링이 아닌, 합치기(include) 개념으로 동작합니다.
+본래는 ts파일의 export 된 객체(모듈)을 가져와 사용하는 개념이지만, 웹퍼블리싱은 보통 번들링을 하지 않고, 브라우저 자체에서의 import 기능을 쓰지 않기 때문에, 번들링이 아닌, 합치기(include) 개념으로 동작합니다.
 
 ### ejs 와 html
 본 프로젝트에서 ejs와 html은 동일하게 취급합니다.
@@ -76,10 +75,10 @@ CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래�
 html에서 ejs의 include 구문으로 적용하면 에디터의 스마트링크(Ctrl+클릭)시 해당 파일이동이 동작하지 않습니다. 해서 임의적으로 ```<include src="경로" options="전달객체"></include>```를 추가적으로 커스텀해서 넣었습니다.  
 
 ```
-# "./src/sub/sub.html" 의 <include> 문 (컴파일 전, html 확장형식)
+# "./src/sub/sub.html" 의 <include> 문 (컴파일 전, html 확장형식, 스마트링크 가능)
 <include src="./_inc/subCommon.html" options="{param:'sub.html 에서 파라매터 전달'}"></include>
 
-# "./.pub/sub/sub.html" 의 <%- include %> 문 (컴파일 후, ejs 형식)
+# "./.pub/sub/sub.html" 의 <%- include %> 문 (컴파일 후, ejs 형식, 스마트링크 불가능)
 <%-include(`./_inc/subCommon.html`,{param:'sub.html 에서 파라매터 전달'}) %>
 ```
 
