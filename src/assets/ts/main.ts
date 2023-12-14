@@ -10,7 +10,7 @@
 type TmainFn = () => Promise<string>;
 
 // 예제 함수
-const mainFn:TmainFn = () => {
+const mainFn:TmainFn = () => { 
     return new Promise((resolve,reject)=>{
         try{
             resolve("main!"); 

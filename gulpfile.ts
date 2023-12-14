@@ -1,25 +1,37 @@
-import type {ITask, IServer, ICopyTask} from "./gulp_modules/@types/gulpfile.d";
+import type {ICompilerTask, IWatcherTask, ICopyTask, IServer} from "./gulp_modules/@types/gulpfile.d";
 import { task, series } from "gulp";
 import * as Config from "./gulp_modules/config"; // gulp 설정 포트 및 폴더 변경 가능
 
-// Gulp Tasks 목록
-const compilers = [
-    {name:"html",module:"html",options:Config.htmlOptions}, // gulp html:compile
-    {name:"scss",module:"scss",options:Config.scssOptions}, // gulp scss:compile
-    {name:"ts",module:"typescript",options:Config.tsOptions} // gulp ts:compile
-];
+// config
+const html = {name:"html",module:"html",options:Config.htmlOptions};
+const scss = {name:"scss",module:"scss",options:Config.scssOptions};
+const ts = {name:"ts",module:"typescript",options:Config.tsOptions};
+const image = {name:"image",module:"image",options:Config.imageOptions};
+const lib = {name:"lib",module:"lib",options:Config.libOptions};
+
+// 컴파일 테스크 등록
+const compilers = [html,scss,ts];
 compilers.forEach((taskItem)=>{
-    task(`${taskItem.name}:compile`,async (done)=>{
-        const module:ITask = await import("./gulp_modules/tasks/"+taskItem.module);
+    task(`${taskItem.name}:compiler`,async (done)=>{
+        const module:ICompilerTask = await import("./gulp_modules/tasks/"+taskItem.module);
         await module.compiler(taskItem.options);
         done();
     });
 });
 
-// Gulp Copy Tasks
-const copys = [
-    {name:"lib",module:"lib",options:Config.libOptions} // gulp lib:copy
-];
+
+// 감시자 테스크 등록
+const watchers = [html,scss,ts,image];
+watchers.forEach((taskItem)=>{
+    task(`${taskItem.name}:watcher`,async (done)=>{
+        const module:IWatcherTask = await import("./gulp_modules/tasks/"+taskItem.module);
+        await module.watcher(taskItem.options);
+        done();
+    });
+});
+
+// 복사하기 테스크 등록
+const copys = [image,lib];
 copys.forEach((taskItem)=>{
     task(`${taskItem.name}:copy`,async (done)=>{
         const module:ICopyTask = await import("./gulp_modules/tasks/"+taskItem.module);
@@ -28,7 +40,6 @@ copys.forEach((taskItem)=>{
     });
 });
 
-
 // 서버실행
 task("server:dev",async (done)=>{
     const server:IServer = await import("./gulp_modules/servers/server");
@@ -36,8 +47,9 @@ task("server:dev",async (done)=>{
     done();
 });
 
-
 // 실무용 통합 Task
-const compileSeries = compilers.map((taskItem)=>taskItem.name+":compile");
-task("compile",series(...compileSeries));
-task("dev",series("lib:copy","compile","server:dev"));
+const compilerSeries = compilers.map((taskItem)=>taskItem.name+":compiler");
+const watcherSeries = watchers.map((taskItem)=>taskItem.name+":watcher");
+task("compile",series("lib:copy",...compilerSeries));
+task("watch",series(...watcherSeries));
+task("dev",series("watch","compile","server:dev"));

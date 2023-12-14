@@ -11,14 +11,21 @@
     const title = "메인"; // 페이지 타이틀
     const isLogin = locals.login || false;
 %>
-<include src="../../layouts/header/header.html" options="{title}"></include>
+<include src="../../layouts/header/header.html" options="{title,category:'main'}"></include>
 <main>
 <h1 class="main">메인</h1>
 <ul>
     <li>locals.location.pathname : <%=locals.location.pathname %></li>
     <li>locals.location.paths : <%=locals.location.paths %></li>
     <li>isLogin(login paramater) : <%=isLogin %></li>
+    <li>ts await text : <span id="awaitText"></span></li>
 </ul>
 <a href="/pages/sub/sub.html">서브페이지 이동</a>
+<script>
+    $(async ()=>{
+        const text = await mainFn();
+        $("#awaitText").text(text);
+    });
+</script>
 </main>
 <include src="../../layouts/footer/footer.html"></include>

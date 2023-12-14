@@ -10,19 +10,15 @@
 export type TOptions = {src:string|string[],base:string,dist:string}; // 테스크 파라매터 옵션 기본형식
 export type TCompiler = (options:TOptions) => Promise<void>; // 컴파일러 공통 타입
 export type TWatcher = (options:TOptions) => Promise<void>; // 감시자 공통 타입
+export type TCopy = (options:TOptions) => Promise<void>; // 복사 공통타입
 
-export interface ITask {
-    compiler:TCompiler,
-    watcher:TWatcher
-}
+export interface ICompilerTask {compiler:TCompiler,watcher?:TWatcher,copy?:TCopy}
+export interface IWatcherTask {compiler?:TCompiler,watcher:TWatcher,copy?:TCopy}
+export interface ICopyTask {compiler?:TCompiler,watcher?:TWatcher,copy:TCopy}
 
 /* SERVER */
 export type TServerOptions = {root:string,port:number,statics?:{route:string,path:string}[]}
 export interface IServer {
     dev:(options:TServerOptions)=>Promise<void>,
     build:(options:TServerOptions)=>Promise<void>
-}
-
-export interface ICopyTask {
-    copy:(options:TOptions) => Promise<void>
 }

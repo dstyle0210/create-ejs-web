@@ -1,5 +1,6 @@
 <% 
     const title = locals.title ? locals.title : "페이지타이틀";
+    const category = locals.category || "sub";
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -25,6 +26,11 @@
 
     <!-- JS -->
     <script type="text/javascript" charset="utf-8" src="/assets/lib/jquery/jquery-3.7.1.min.js"></script> <!-- jquery built-in-->
+    <%if(category=="main"){%>
+    <script type="text/javascript" charset="utf-8" src="/assets/js/main.js"></script>
+    <%}else if(category=="sub"){%>
+    <script type="text/javascript" charset="utf-8" src="/assets/js/sub.js"></script>
+    <%}%>
 </head>
 <body>
 <header>공통헤더</header>

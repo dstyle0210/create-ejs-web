@@ -13,7 +13,7 @@ type TsubFn = () => Promise<string>;
 const subFn:TsubFn = () => {
     return new Promise((resolve,reject)=>{
         try{
-            resolve("main!"); 
+            resolve("sub!"); 
         }catch(e){
             reject(e); 
         };

@@ -9,15 +9,22 @@
     const title = "서브"; // 페이지 타이틀
     const category = "sub"; // 페이지의 카테고리 분류
 %>
-<include src="../../layouts/header/header.html" options="{title}"></include>
+<include src="../../layouts/header/header.html" options="{title,category:'sub'}"></include>
 <main>
     <h1 class="sub">서브</h1>
 <ul>
     <li>locals.location.pathname : <%=locals.location.pathname %></li>
     <li>locals.location.paths : <%=locals.location.paths %></li>
+    <li>ts await text : <span id="awaitText"></span></li>
 </ul>
 <a href="/pages/main/main.html">메인페이지 이동</a><br />
 <a href="/pages/sub/sub1/sub1.html">서서브 페이지 이동</a>
+<script>
+    $(async ()=>{
+        const text = await subFn();
+        $("#awaitText").text(text);
+    });
+</script>
 <div>
     <%# 페이지 내 인클루드 파일, "_inc" 폴더에 따른 제외처리 예제 %>
     <include src="./_inc/subCommon.html" options="{param:'sub.html 에서 파라매터 전달'}"></include>
