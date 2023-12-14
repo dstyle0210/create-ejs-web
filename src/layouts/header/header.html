@@ -1,0 +1,31 @@
+<% 
+    const title = locals.title ? locals.title : "페이지타이틀";
+%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1, target-densitydpi=medium-dpi, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+
+    <%# Open Graph %>
+    <include src="./_inc/openGraph.html"></include>
+
+    <%# Favicon %>
+    <include src="./_inc/favicon.html"></include>
+    
+    <!-- TITLE -->
+    <title><%=title %></title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/layout.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/sub.css" />
+
+    <!-- JS -->
+    <script type="text/javascript" charset="utf-8" src="/assets/lib/jquery/jquery-3.7.1.min.js"></script> <!-- jquery built-in-->
+</head>
+<body>
+<header>공통헤더</header>
+<hr>

@@ -1,0 +1,24 @@
+<!-- HTMLDOC
+@since 2023.12.14
+@author mabongpapa
+@page [P] 메인
+@param {string} title - 페이지 제목
+@param {boolean} login - 로그인 여부
+@caseBy /pages/main/main.html?login=true // 로그인 상태(true값 , 파라매터 예제)
+@caseBy /pages/main/main.html?login=false // 로그인 상태(false값 , 파라매터 예제)
+-->
+<%    
+    const title = "메인"; // 페이지 타이틀
+    const isLogin = locals.login || false;
+%>
+<include src="../../layouts/header/header.html" options="{title}"></include>
+<main>
+<h1 class="main">메인</h1>
+<ul>
+    <li>locals.location.pathname : <%=locals.location.pathname %></li>
+    <li>locals.location.paths : <%=locals.location.paths %></li>
+    <li>isLogin(login paramater) : <%=isLogin %></li>
+</ul>
+<a href="/pages/sub/sub.html">서브페이지 이동</a>
+</main>
+<include src="../../layouts/footer/footer.html"></include>

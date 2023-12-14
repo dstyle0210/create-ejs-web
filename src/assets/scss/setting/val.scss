@@ -1,0 +1,20 @@
+/**
+* 공통변수
+* @description SASS(scss)에서 사용되는 공통 환경변수
+*
+* @Modification Information
+*
+* 수정일 : 수정자 : 수정내용
+* --------------------------
+* 2023.12.14 : Mabongpapa : 최초생성
+*/
+
+// Color System
+$gray:#666;
+$darkGray:#333;
+
+// COLOR
+$font-color:$darkGray;
+
+// TYPO
+$font-family-base:-apple-system, BlinkMacSystemFont, "Noto Sans", sans-serif;

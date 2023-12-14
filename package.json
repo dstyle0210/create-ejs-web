@@ -1,0 +1,44 @@
+{
+  "name": "create-ejs-web",
+  "version": "0.1.0",
+  "description": "ejs 기반 웹 퍼블리싱 보일러 플레이트",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
+  "keywords": ["dsyle0210","mabongpapa","ejs","sass","scss","javascript","typescript","front-end","webpublish","Boiler Plate"],
+  "author": "@dstyle0210(A.K.A mabongpapa)",
+  "license": "MIT",
+  "engines" : { 
+    "node" : ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/npm/npm.git"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.23.3",
+    "@types/express": "^4.17.21",
+    "@types/gulp": "^4.0.17",
+    "@types/gulp-babel": "^6.1.33",
+    "@types/gulp-concat": "^0.0.37",
+    "@types/gulp-csso": "^4.0.5",
+    "@types/gulp-replace": "^1.1.0",
+    "@types/gulp-sass": "^5.0.4",
+    "@types/request": "^2.48.12",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "fast-glob": "^3.3.2",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-csscomb": "^3.1.0",
+    "gulp-csso": "^4.0.1",
+    "gulp-replace": "^1.1.4",
+    "gulp-sass": "^5.1.0",
+    "marked": "^11.0.1",
+    "request": "^2.88.2",
+    "sass": "^1.69.5",
+    "ts-node": "^10.9.1"
+  }
+}
