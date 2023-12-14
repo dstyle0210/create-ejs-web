@@ -34,7 +34,38 @@ gulp dev
 | server:dev | - | 임시폴더(ex : .pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
 | **dev** | lib:copy,  compile,  server:dev | 개발환경으로 시작합니다.
 
+## 폴더구조
+### 프로젝트 폴더구조
+```
+./
++-- /.pub // ./src 에서 컴파일된 결과물 임시저장소, 개발서버의 루트
++-- /build // 완료후 산출물 제출을 위해, 순수 html,css,js 로 컴파일 되는 곳
++-- /gulp_modules // gulp 실행을 위한 설정 및 실행모듈들
+|   +-- @Types // gulp 환경용 types
+|   +-- servers // 서버실행
+|   +-- tasks // 컴파일 등 실행함수
+|   +-- util // gulp 공통함수
+|   +-- config.ts // gulp 환경설정 (가장중요)
++-- /src // 실제 퍼블리싱을 하는 소스의 위치 (아래 참고)
+```
 
+### src 폴더구조
+```
+./src
++-- /@guide // 웹퍼블리싱 가이드
++-- /assets
+|   +-- scss // scss을 모아주는(@import) 엔트리 성격의 scss
+|   +-- ts // typescript을 모아주는(import) 엔트리 성격의 ts
+|   +-- lib // 라이브러리 들
++-- /layouts
+|   +-- header // 헤더 공통 영역
+|   +-- footer // 풋터 공통 영역
++-- /pages // 페이지
+|   +-- main // 메인 페이지
+|   +-- sub // 서브 페이지 들
++-- index.html // 초기 접속페이지
++-- sitemap.html // 사이트맵
+```
 
 ## QA
 ### Q. gulp 에서 보안오류가 나와요.
