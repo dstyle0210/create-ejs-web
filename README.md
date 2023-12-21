@@ -89,6 +89,18 @@ gulp : 이 시스템에서 스크립트를 실행할 수 없으므로 *** 파일
 2. ```Set-ExecutionPolicy RemoteSigned```을 입력하시고 엔터.
 3. "y" 하시고 엔터 하시면 됩니다.
 
+### Q. gulp 가 실행할수 없는 프로그램 이래요.
+```
+gulp : 'gulp' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다. 이름이 정확한지 확인하고 경로가 포함된 경우 경로가 올바른지 검증한 다음 다시 시도하십시오.
+위치 줄:1 문자:1
++ gulp
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (gulp:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+```
+1. ```npm i gulp-cli -g``` 로 gulp 을 글로벌설치 및 실행구문으로 등록해주세요.
+2. [Gulp Task](#gulp-task) 중, dev 는 사실 ```npm run dev``` 로도 실행 할수 있어요.
+
 ### Q. intelliJ (또는 Webstorm) 에서 안되요.
 일단 기준은 vscode을 기준으로 만들어 졌고... 사실 확인 안 해봤어요.   
 오류 상황을 보내주시면 확인해볼께요.
