@@ -6,9 +6,10 @@
     "dev": "gulp dev",
     "build": "gulp build"
   },
+  "bin": { 
+    "create-ejs-web": "./.bin/create-ejs-web.js"
+  },
   "keywords": [
-    "dsyle0210",
-    "mabongpapa",
     "ejs",
     "sass",
     "scss",
