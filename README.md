@@ -2,12 +2,11 @@
 - ejs 기반 웹 퍼블리싱 보일러 플레이트 입니다.
 - SI 프로젝트를 기준으로 만들었어요.
 
-
-## 제공환경
-- [expressJs](https://expressjs.com/)
-- [EJS](https://ejs.co/)
-- [SCSS](https://sass-lang.com/)
-- [typescript](https://www.typescriptlang.org)
+## 설치(npx)
+```bash
+npx create-ejs-web my-web
+npm run dev
+```
 
 ## 설치(npm)
 1. [NodeJs](https://nodejs.org/) v18 이상 설치
@@ -20,8 +19,14 @@ npm i
 gulp dev
 ```
 4. 브라우저에서 ```localhost:3000``` 을 입력해서 접속해봅니다.
-5. 혹시 오류나면 아래 추가내용 QA을 참고해주세요.
+5. 혹시 오류나면 아래 추가내용 [QA](#qa)을 참고해주세요.
 6. 상세 설정은 "./gulp_modules/config.ts" 파일을 확인하세요.
+
+## 제공환경
+- [expressJs](https://expressjs.com/)
+- [EJS](https://ejs.co/)
+- [SCSS](https://sass-lang.com/)
+- [typescript](https://www.typescriptlang.org)
 
 ## Gulp Task
 ```bash
