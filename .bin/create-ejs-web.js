@@ -16,15 +16,17 @@ const GIT_REPO = "https://github.com/dstyle0210/create-ejs-web.git";
 
 async function main() {
     try {
-        console.log("Downloading files...");
+        console.log("파일을 다운로드 합니다. Downloading files.");
         execSync(`git clone --depth 1 ${GIT_REPO} ${projectPath}`);
         if (projectName !== ".") process.chdir(projectPath); // 생성된 폴더로 이동
 
-        console.log("Installing dependencies...");
+        console.log("디펜던시 설치중. Installing dependencies.");
         execSync("npm install");
-        execSync("npx rimraf ./.bin"); // 이제 보일러플레이트 git과 관련된 내용 제거2
+        execSync("npx rimraf ./.git"); // git 리파지토리 제거
+        execSync("npx rimraf ./.bin"); // 설치파일 제거
 
         console.log("The installation is done, this is ready to use !");
+        console.log("설치가 완료되었습니다. 'npm run dev' 를 실행해보세요. The installation is done, Please run 'npm run dev'.");
     } catch (error) {
         console.log(error);
     }
