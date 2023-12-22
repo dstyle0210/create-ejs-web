@@ -22,10 +22,12 @@ async function main() {
 
         console.log("디펜던시 설치중. Installing dependencies.");
         execSync("npm install");
+
+        console.log("불필요한 파일을 삭제 합니다. Delete unnecessary files.");
         execSync("npx rimraf ./.git"); // git 리파지토리 제거
         execSync("npx rimraf ./.bin"); // 설치파일 제거
+        execSync("npx rimraf ./LICENSE"); // 라이센스 제거
 
-        console.log("The installation is done, this is ready to use !");
         console.log("설치가 완료되었습니다. 'npm run dev' 를 실행해보세요. The installation is done, Please run 'npm run dev'.");
     } catch (error) {
         console.log(error);

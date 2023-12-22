@@ -1,32 +1,22 @@
 # create-ejs-web
 - ejs 기반 웹 퍼블리싱 보일러 플레이트 입니다.
-- SI 프로젝트를 기준으로 만들었어요.
+
+---
 
 ## 설치(npx)
+1. [NodeJs](https://nodejs.org/) v18 이상 설치해 주세요.
+2. 실행창( Windows + R ) 을 열고, "cmd" 를 입력, 엔터 해서 콘솔창(터미널)을 엽니다.
+3. 설치할  폴더로 이동합니다. ```cd 작업할 폴더위치```
+3. 아래의 코드를 실행창에 넣어 실행(설치)합니다.
 ```bash
 npx create-ejs-web my-web
 npm run dev
-```
-
-## 설치(npm)
-1. [NodeJs](https://nodejs.org/) v18 이상 설치
-2. 실행창( Windows + R ) 을 열고, "cmd" 를 입력, 엔터 해서 콘솔창(터미널)을 엽니다.
-3. 아래의 코드를 실행창에 넣어 실행(설치)합니다.
-```bash
-npm i npm@latest -g
-npm i gulp-cli -g
-npm i
-gulp dev
 ```
 4. 브라우저에서 ```localhost:3000``` 을 입력해서 접속해봅니다.
 5. 혹시 오류나면 아래 추가내용 [QA](#qa)을 참고해주세요.
 6. 상세 설정은 "./gulp_modules/config.ts" 파일을 확인하세요.
 
-## 제공환경
-- [expressJs](https://expressjs.com/)
-- [EJS](https://ejs.co/)
-- [SCSS](https://sass-lang.com/)
-- [typescript](https://www.typescriptlang.org)
+---
 
 ## Gulp Task
 ```bash
@@ -48,11 +38,13 @@ gulp dev
 | **watch** | html:watcher,  scss:watcher,  ts:watcher | 감시자 통합 실행
 | **dev** | watch, compile, server:dev | 컴파일 및 감시자, 서버시작 통합 실행
 
+---
+
 ## 폴더구조
 ### 작업환경 폴더구조
 ```
 ./
-+-- /.pub // ./src 에서 컴파일된 결과물 임시저장소, 개발서버의 루트
++-- /.pub // ./src 에서 컴파일된 결과물 임시저장소, 개발서버의 루트,
 +-- /build // 완료후 산출물 제출을 위해, 순수 html,css,js 로 컴파일 되는 곳
 +-- /gulp_modules // gulp 실행을 위한 설정 및 실행모듈들
 |   +-- @Types // gulp 환경용 types
@@ -81,18 +73,22 @@ gulp dev
 +-- sitemap.html // 사이트맵
 ```
 
+---
+
 ## QA
-### Q. gulp 에서 보안오류가 나와요.
+### Q. npx를 실행하면 아래같은 에러가 나와요.
 ```
-gulp : 이 시스템에서 스크립트를 실행할 수 없으므로 *** 파일을 로드할 수 없습니다. 
-+ gulp dev
-+ ~~~~
-    + CategoryInfo          : 보안 오류: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess
+npm ERR! path C:\Users\사용자명\AppData\Roaming\npm
+npm ERR! errno -4058
+npm ERR! enoent ENOENT: no such file or directory ...
 ```
-1. 검색에 powershell 을 찾고, **"관리자 권한으로 실행"** 을 눌러주세요.
-2. ```Set-ExecutionPolicy RemoteSigned```을 입력하시고 엔터.
-3. "y" 하시고 엔터 하시면 됩니다.
+npm이 처음 설치되었거나, 글로벌 설치가 한번도 없었어서 그래요.  
+정확하겐, ```C:\Users\사용자명\AppData\Roaming\npm``` 폴더가 없어서 그래요.
+```
+npm i gulp-cli -g
+```
+를 한번 설치해주세요. (gulp 글로벌 설치 입니다.)
+
 
 ### Q. gulp 가 실행할수 없는 프로그램 이래요.
 ```
@@ -106,9 +102,17 @@ gulp : 'gulp' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수
 1. ```npm i gulp-cli -g``` 로 gulp 을 글로벌설치 및 실행구문으로 등록해주세요.
 2. [Gulp Task](#gulp-task) 중, dev 는 사실 ```npm run dev``` 로도 실행 할수 있어요.
 
-### Q. intelliJ (또는 Webstorm) 에서 안되요.
-일단 기준은 vscode을 기준으로 만들어 졌고... 사실 확인 안 해봤어요.   
-오류 상황을 보내주시면 확인해볼께요.
+### Q. gulp 에서 보안오류가 나와요.
+```
+gulp : 이 시스템에서 스크립트를 실행할 수 없으므로 *** 파일을 로드할 수 없습니다. 
++ gulp dev
++ ~~~~
+    + CategoryInfo          : 보안 오류: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+```
+1. 검색에 powershell 을 찾고, **"관리자 권한으로 실행"** 을 눌러주세요.
+2. ```Set-ExecutionPolicy RemoteSigned```을 입력하시고 엔터.
+3. "y" 하시고 엔터 하시면 됩니다.
 
 ### Q. ```** vulnerabilities (* moderate, ** high)``` 이런식으로 나와요.
 CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래된거라(...) 그렇습니다.   
@@ -117,6 +121,8 @@ CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래�
 ### Q. ".pub" 폴더랑 "build" 폴더가 생겼어요.
 ".pub" 폴더는 개발서버용 임시 폴더 입니다.(임시 이지만, 중요한 폴더예요. src보다 더 중요할수도 있음)  
 "build" 폴더는 배포용폴더 라고 하는데, 웹퍼블리싱 완료 후에 산출물 제출용이예요.
+
+---
 
 ## 참고하세요.
 ### typescript(.ts)의 import 
@@ -129,14 +135,21 @@ CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래�
 단, "./src" 폴더 내에 사용된 ".ejs" 파일은 compile 시에 ".pub" 폴더 안에 ".html" 파일로 변경되서 저장됩니다.
 
 ### html 의 ```<include>``` 구문 (확장된 엘리먼트)
-ejs의 include 구문을 적용하면 에디터(ex : vscode)의 스마트링크(Ctrl+클릭)시 해당 파일이동이 동작하지 않습니다. 
+ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(Ctrl+클릭)시 해당 파일이동이 동작하지 않습니다. 
 해서 임의적으로 ```<include src="경로" options="전달객체"></include>```를 추가적으로 커스텀(확장 엘리먼트 생성)해서 넣었습니다.  
 
 ```
-# "./src/sub/sub.html" 의 <include> 문 (컴파일 전, html 확장형식, 스마트링크 가능)
+# "./src/sub/sub.html" 의 <include> 문 (컴파일 전, html 확장형식, 팔로우링크 가능)
 <include src="./_inc/subCommon.html" options="{param:'sub.html 에서 파라매터 전달'}"></include>
 
-# "./.pub/sub/sub.html" 의 <%- include %> 문 (컴파일 후, ejs 형식, 스마트링크 불가능)
+# "./.pub/sub/sub.html" 의 <%- include %> 문 (컴파일 후, ejs 형식, 팔로우링크 불가)
 <%-include(`./_inc/subCommon.html`,{param:'sub.html 에서 파라매터 전달'}) %>
 ```
 
+---
+
+## 제공환경
+- [expressJs](https://expressjs.com/)
+- [EJS](https://ejs.co/)
+- [SCSS](https://sass-lang.com/)
+- [typescript](https://www.typescriptlang.org)
