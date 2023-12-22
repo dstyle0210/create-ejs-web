@@ -22,3 +22,9 @@ export interface IServer {
     dev:(options:TServerOptions)=>Promise<void>,
     build:(options:TServerOptions)=>Promise<void>
 }
+
+/* SITEMAP */
+export interface ISitemap {
+    crawler:(options:{base:string,src:string|string[]}) => Promise<{name:string,devUrl:string,buildUrl:string}[]>,
+    save:(options:{base:string,src:string|string[]},jsonSavePath:string) => Promise<void>,
+}

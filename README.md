@@ -17,14 +17,13 @@ npm run dev
 6. 상세 설정은 "./gulp_modules/config.ts" 파일을 확인하세요.
 
 ---
-
 ## Gulp Task
 ```bash
 # gulp 테스트명 으로 실행
 ```
 | 테스크명 | 연결 테스크 | 기능
 |---|---|---|
-| html:compiler | - | 지정된 위치의 ejs와 html을 ejs형식으로 컴파일합니다.
+| html:compiler | - | 지정된 위치의 ".ejs" 또는 ".html" 을 ".html" 확장자인, ejs로 컴파일합니다.
 | html:watcher | - | 지정된 위치의 ".ejs" 또는 ".html" 가 변경 될 경우, 컴파일 되도록 감시합니다.
 | scss:compiler | - | 지정된 위치의 ".scss"을 컴파일합니다.
 | scss:watcher | - | 지정된 위치의 ".scss"가 변경 될 경우 컴파일 되도록 감시합니다.
@@ -33,10 +32,21 @@ npm run dev
 | image:copy | - | 지정된 위치의 ".jpg, .png, .gif, .ico"을 임시폴더로 복사합니다.
 | image:watcher | - | 지정된 위치의 ".jpg, .png, .gif, .ico" 가 변경 될 경우 임시폴더로 복사 되도록 감시합니다.
 | lib:copy | - | 라이브러리 파일들을 임시폴더로 복사합니다.( ex : ./src/assets/lib )
-| server:dev | - | 임시폴더(ex : .pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
 | **compile** | lib:copy, html:compiler,  scss:compiler,  ts:compiler | 컴파일러 통합 실행
 | **watch** | html:watcher,  scss:watcher,  ts:watcher | 감시자 통합 실행
-| **dev** | watch, compile, server:dev | 컴파일 및 감시자, 서버시작 통합 실행
+| server:dev | - | 임시폴더(ex : .pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
+| sitemap:save | - | 임시폴더(ex : .pub)을 루트로 "./pages/" 하위의 html의 PAGEDOC 정보를 수집하여 sitemap.json을 생성합니다.
+| **sitemap** | html:compiler, sitemap:save | html 컴파일 및 PAGEDOC 수집 통합실행 합니다.
+| **dev** | watch, compile, sitemap:pub, server:dev | 컴파일 및 감시자, 서버시작 통합 실행
+
+## 테스크 실행
+세부실행 부분은 gulp에 의존하지만, 자주쓰는 실행(두꺼운글씨)은 npm run 을 통해서도 가능합니다.
+```bash
+# gulp dev 와 동일
+npm run dev
+# gulp sitemap 와 동일
+npm run sitemap
+```
 
 ---
 
@@ -87,8 +97,7 @@ npm이 처음 설치되었거나, 글로벌 설치가 한번도 없었어서 그
 ```
 npm i gulp-cli -g
 ```
-를 한번 설치해주세요. (gulp 글로벌 설치 입니다.)
-
+를 한번 설치해주시고(gulp 글로벌 설치 입니다.) , npx로 재설치 해보세요.
 
 ### Q. gulp 가 실행할수 없는 프로그램 이래요.
 ```
@@ -153,3 +162,16 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 - [EJS](https://ejs.co/)
 - [SCSS](https://sass-lang.com/)
 - [typescript](https://www.typescriptlang.org)
+
+---
+
+## 업데이트 이력 v0.7.0
+- 임의로 생성된 PAGEDOC 형식을 통해 사이트맵 생성이 가능합니다.
+- PAGEDOC 작성법은 "./@convention/pagedoc.md" 를 참고해주세요.
+- PAGEDOC 을 통해 생성된 사이트맵은 ```npm run dev``` 실행 후, ```http://localhost:3000/sitemap.html``` 에서 확인이 가능합니다.
+- sitemap.json 생성은 아래의 Task로 실행가능합니다.
+```bash
+npm run sitemap
+# 또는
+gulp sitemap
+```
