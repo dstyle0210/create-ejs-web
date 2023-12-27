@@ -25,11 +25,9 @@ export const crawler = async (options:{base:string,src:string|string[]}):Promise
 
     const srcs = await glob(options.src);
     for await (const src of srcs){
-        console.log(src);
         const srcPath = "./"+path.relative("./",src).replace(/\\/g,"/");
         const htmlRaw = fs.readFileSync(srcPath,"utf8");
         const htmlDoc = getMatchText(htmlRaw,/^(<!-- PAGEDOC)((?!-->).|[\r\n])+(-->)/g);
-        console.log(htmlDoc);
         const pageName = getMatchText(htmlDoc,/@page (.)+/).replace("@page ","");
         
         // 기본 페이지 정보
@@ -50,4 +48,6 @@ export const save = async (options:{base:string,src:string|string[]},jsonSavePat
     const pageMap = await crawler(options);
     fs.mkdirSync(path.dirname(jsonSavePath),{recursive:true}); // 저장할 폴더 생성
     fs.writeFileSync(jsonSavePath,JSON.stringify(pageMap),"utf8"); // 파일 저장
+    console.log(`${timeStamp().task}[Sitemap:save] ${pageMap.length} page crawlings`);
+
 }

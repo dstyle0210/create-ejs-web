@@ -57,11 +57,11 @@ task("watch",series(...watcherSeries));
 // 사이트맵 생성
 task("sitemap:save",async (done)=>{
     const sitemap:ISitemap = await import("./gulp_modules/tasks/sitemap");
-    sitemap.save(Config.htmlDistOptions,Config.devServerRoot+"/sitemap.json"); // 개발서버 루트폴더에 저장
+    await sitemap.save(Config.htmlDistOptions,Config.devServerRoot+"/sitemap.json"); // 개발서버 루트폴더에 저장
     done();
 });
 task("sitemap",series("html:compiler","sitemap:save"));
 
 
 // 퍼블시작
-task("dev",series("watch","compile","server:dev"));
+task("dev",series("watch","compile","sitemap:save","server:dev"));

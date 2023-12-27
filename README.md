@@ -37,7 +37,7 @@ npm run dev
 | server:dev | - | 임시폴더(ex : .pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
 | sitemap:save | - | 임시폴더(ex : .pub)을 루트로 "./pages/" 하위의 html의 PAGEDOC 정보를 수집하여 sitemap.json을 생성합니다.
 | **sitemap** | html:compiler, sitemap:save | html 컴파일 및 PAGEDOC 수집 통합실행 합니다.
-| **dev** | watch, compile, sitemap:pub, server:dev | 컴파일 및 감시자, 서버시작 통합 실행
+| **dev** | watch, compile, sitemap:save, server:dev | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
 
 ## 테스크 실행
 세부실행 부분은 gulp에 의존하지만, 자주쓰는 실행(두꺼운글씨)은 npm run 을 통해서도 가능합니다.
@@ -47,6 +47,13 @@ npm run dev
 # gulp sitemap 와 동일
 npm run sitemap
 ```
+
+## 사이트맵 수집
+- 개발환경 실행 ```npm run dev``` 후 사이트맵으로 빠른 이동을 시킬수 있습니다.  
+- 사이트맵은 http://localhost:3000/sitemap.html 로 접근 가능 합니다.   
+- 사이트맵은 [PAGEDOC](./@convention/pagedoc.md) 형식으로, 작성되면 개발환경 실행시 자동으로 크롤링 됩니다.  
+- 수동으로 가져오는 경우는 ```npm run sitemap``` 로 재수집 할수 있습니다.
+
 
 ---
 
