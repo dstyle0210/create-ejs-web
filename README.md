@@ -172,13 +172,7 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 ---
 
-## 업데이트 이력 v0.7.0
-- 임의로 생성된 PAGEDOC 형식을 통해 사이트맵 생성이 가능합니다.
-- PAGEDOC 작성법은 "./@convention/pagedoc.md" 를 참고해주세요.
-- PAGEDOC 을 통해 생성된 사이트맵은 ```npm run dev``` 실행 후, ```http://localhost:3000/sitemap.html``` 에서 확인이 가능합니다.
-- sitemap.json 생성은 아래의 Task로 실행가능합니다.
-```bash
-npm run sitemap
-# 또는
-gulp sitemap
-```
+## 업데이트 이력 v0.7.1
+- 가이드 기초항목이 추가되었습니다.
+- 컨벤션 항목으로 일부 옮겨 졌습니다.
+- 빌드를 위한 코드들이 추가되었습니다.(현재 개발중)

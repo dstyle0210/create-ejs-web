@@ -6,12 +6,17 @@
  * --------------------------
  * 2023.12.14 : Mabongpapa : 최초생성
  */
+import type {IServer} from "../@types/gulpfile.d";
 import path from "path";
 import fs from "fs";
 import glob from "fast-glob";
 import {watch} from "gulp";
 import timeStamp from "../util/getTimeStamp";
 import getSrcDist from "../util/getSrcDist";
+import request from "request";
+import {crawler} from "./sitemap"; // dist 목록 가져오기
+import * as Config from "../config"; // 해당 포트 및 폴더 변경 가능
+import findPidFromPort from "../util/findPidFromPort";
 
 // 시작시 전체 컴파일용
 export const compiler = async (options:{src:string,base:string,dist:string}) => {
@@ -52,4 +57,49 @@ const ejsCompileToHtml = async (options:{src:string,dist:string},callerName?:str
     fs.writeFileSync(distPath,_htmlRaw,{encoding:"utf8"}); // 파일 저장
     console.log(`${timeStamp().task}[${callerName}] ${options.src}`);
     return;
+}
+
+
+// 시작시 전체 컴파일용
+export const dist = (options:{src:string,base:string,dist:string}):Promise<void> => {
+    return new Promise(async (resolve,reject) => {
+        const pageMap = await crawler(options);
+
+        // 개발서버 실행(기존에 실행되어 있다면 미동작)
+        let pid = await findPidFromPort(Config.devPort); // 서버실행 여부 확인
+        let isDevServerReady = !!pid; // 서버가 있다면 true , 없으면 false.
+        if(!isDevServerReady){ // 서버가 없었으면 실행 시킨다.
+            const server:IServer = await import("../servers/server");
+            await server.dev({root:options.base,port:Config.devPort});
+        };
+        
+        for await (const page of pageMap){
+            const url = `http://localhost:${Config.devPort}${page.devUrl}`;
+            console.log(url);
+            const htmlRaw = await asyncRequest(url);
+            const buildPath = Config.buildServerRoot+page.buildUrl;
+            fs.mkdirSync(path.dirname(buildPath),{recursive:true});
+            fs.writeFileSync(buildPath,htmlRaw,"utf8");
+            console.log(`${timeStamp().task}[html:dist] ${buildPath}`);
+        };
+
+        if(!isDevServerReady){
+            pid = await findPidFromPort(Config.devPort); // 서버실행 여부 확인
+            setTimeout(()=>{
+                console.log(`${timeStamp().task}[html:dist] process.kill , port ${Config.devPort}`);
+                process.kill(pid);
+            },2000);
+        };
+
+        resolve();
+    });
+};
+
+const asyncRequest = (url:string):Promise<string> => {
+    return new Promise((resolve,reject)=>{
+        request(url,(error,response,body)=>{
+            // TODO : 디플로이 로직 추가필요.
+            resolve(body);
+        });
+    });
 }

@@ -1,12 +1,12 @@
-import type {ICompilerTask, IWatcherTask, ICopyTask, IServer, ISitemap} from "./gulp_modules/@types/gulpfile.d";
+import type {ICompilerTask, IWatcherTask, ICopyTask, IServer, ISitemap,IDistTask} from "./gulp_modules/@types/gulpfile.d";
 import { task, series } from "gulp";
 import * as Config from "./gulp_modules/config"; // gulp 설정 포트 및 폴더 변경 가능
 
 // config
-const html = {name:"html",module:"html",options:Config.htmlOptions};
-const scss = {name:"scss",module:"scss",options:Config.scssOptions};
-const ts = {name:"ts",module:"typescript",options:Config.tsOptions};
-const image = {name:"image",module:"image",options:Config.imageOptions};
+const html = {name:"html",module:"html",options:Config.htmlOptions,dists:Config.htmlDistOptions};
+const scss = {name:"scss",module:"scss",options:Config.scssOptions,dists:Config.cssDistOptions};
+const ts = {name:"ts",module:"typescript",options:Config.tsOptions,dists:Config.jsDistOptions};
+const image = {name:"image",module:"image",options:Config.imageOptions,dists:Config.imageDistOptions};
 const lib = {name:"lib",module:"lib",options:Config.libOptions};
 
 // 컴파일 테스크 등록
@@ -65,3 +65,23 @@ task("sitemap",series("html:compiler","sitemap:save"));
 
 // 퍼블시작
 task("dev",series("watch","compile","sitemap:save","server:dev"));
+
+
+// 산출물 빌드
+const dists = [html,scss,ts,image];
+dists.forEach((taskItem)=>{
+    task(`${taskItem.name}:dist`,async (done)=>{
+        const module:IDistTask = await import("./gulp_modules/tasks/"+taskItem.module);
+        await module.dist(taskItem.dists);
+        done();
+    });
+});
+task("html:build",series("html:compiler","html:dist"));
+task("scss:build",series("scss:compiler","scss:dist"));
+task("ts:build",series("ts:compiler","ts:dist"));
+task("image:build",series("image:copy","image:dist"));
+
+
+task("build",async () => {
+    console.log("빌드");
+})

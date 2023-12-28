@@ -74,8 +74,9 @@
 @param {"member"|"guest"} [memberType="member"] 회원타입(member:회원, guest:손님)
 -->
 ```
-### ```@case```
+### ```@caseBy```
 - 웹주소(get방식)이나, ejs의 include props 를 통해 달라지는 화면의 목록 입니다.
+- ```@caseBy(반칸)웹주소(빈칸 + //)코멘트``` 식으로 작성합니다.
 ```html
 <!-- PAGEDOC
 @caseBy /pages/main/main.html?login=true // 로그인 상태(true값 , 파라매터 예제)

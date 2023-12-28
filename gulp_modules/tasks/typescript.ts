@@ -15,6 +15,17 @@ import replace from "gulp-replace";
 import concat from "gulp-concat";
 import timeStamp from "../util/getTimeStamp";
 
+export const dist = (options:{src:string,base:string,dist:string}):Promise<void> => {
+    return new Promise((resolve,reject) => {
+        src(options.src,{base:options.base})
+        // TODO : 디플로이 변환로직 추가 필요.
+        .pipe(dest(options.dist))
+        .on("end",()=>{
+            resolve();
+        })
+    });
+};
+
 // 공통 함수
 const _jsDocRegs = new RegExp(/(\/\*)(\**)(\s*)((?!\*\/).(\s*))+(\s*)(\*\/)/,"gim"); // jsdoc,tsdoc 삭제용 정규식
 const _inlineComment = new RegExp(/(\/\/)(\s)*((?!shoppingflv)(?!img).|\d+)+/,"gi"); // 한줄 주석(//) 처리삭제용 정규식

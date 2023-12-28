@@ -80,8 +80,8 @@ customerService (O)
 
 ### Typescript
 - any는 미사용합니다.
-- Type은 "T" 대문자 및 파스칼케이스로 사용합니다.
-- Interface는 "I" 대문자 및 파스칼케이스로 사용합니다.
+- Type은 "T" 대문자로 시작하고, 스네이크케이스로 작성합니다.
+- Interface는 "I" 대문자로 시작하고, 스네이크케이스로 작성합니다.
 - Enum 선언은 파스칼케이스로 사용합니다.
 ```typescript
 type example = string; // (X) , "T"로 시작 안함

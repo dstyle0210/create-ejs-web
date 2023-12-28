@@ -9,6 +9,17 @@
 import {src,dest,watch} from "gulp";
 import timeStamp from "../util/getTimeStamp";
 
+export const dist = (options:{base:string,src:string|string[],dist:string}):Promise<void> => {
+    return new Promise((resolve,reject) => {
+        src(options.src,{base:options.base})
+        // TODO : 디플로이 변환로직 추가 필요.
+        .pipe(dest(options.dist))
+        .on("end",()=>{
+            resolve();
+        })
+    });
+}
+
 // 시작시 전체 컴파일용
 export const copy = async (options:{base:string,src:string,dist:string}):Promise<void> => {
     await imageCopy(options,"Image:copy");

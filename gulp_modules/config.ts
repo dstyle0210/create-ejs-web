@@ -6,7 +6,7 @@ export const devServerRoot = "./.pub"; // 개발서버 루트폴더
 export const devServerStatics = [ // 개발서버 스테틱 리소스 폴더
     {route:"/assets",path:devServerRoot+"/assets"}, // css, js
     {route:"/images",path:devServerRoot+"/images"} // image
-]; 
+];
 export const devPort = 3000; // 개발용 서버 포트 ( http://localhost:3000 )
 export const devServerOptions = {
     root:devServerRoot,

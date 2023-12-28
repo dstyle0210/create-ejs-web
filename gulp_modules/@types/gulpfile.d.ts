@@ -11,10 +11,12 @@ export type TOptions = {src:string|string[],base:string,dist:string}; // 테스�
 export type TCompiler = (options:TOptions) => Promise<void>; // 컴파일러 공통 타입
 export type TWatcher = (options:TOptions) => Promise<void>; // 감시자 공통 타입
 export type TCopy = (options:TOptions) => Promise<void>; // 복사 공통타입
+export type TDist = (options:TOptions) => Promise<void>; // 컴파일러 공통 타입
 
-export interface ICompilerTask {compiler:TCompiler,watcher?:TWatcher,copy?:TCopy}
-export interface IWatcherTask {compiler?:TCompiler,watcher:TWatcher,copy?:TCopy}
-export interface ICopyTask {compiler?:TCompiler,watcher?:TWatcher,copy:TCopy}
+export interface ICompilerTask {compiler:TCompiler}
+export interface IWatcherTask {watcher:TWatcher}
+export interface ICopyTask {copy:TCopy}
+export interface IDistTask {dist:TDist}
 
 /* SERVER */
 export type TServerOptions = {root:string,port:number,statics?:{route:string,path:string}[]}
