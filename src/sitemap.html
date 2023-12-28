@@ -34,25 +34,12 @@
     <script type="text/javascript" charset="utf-8" src="/assets/lib/jquery/jquery-3.7.1.min.js"></script> <!-- jquery built-in-->
 </head>
 <body>
-<div class="sitemapWrapper">
-    <header>
-        <h1>사이트맵</h1>
-    </header>
-    <main>
-        <section class="t-pages" id="pages"></section>
-    </main>
-</div>
-
-<script>
-    // config
-    const devServerPort = 3000; // 개발서버 포트
-    const sitemapUrl = "/sitemap.json"; // 사이트맵 파일 주소
+    <%
+    // service
     const categoryfilter = {
         main: "메인",
         sub: "서브"
     };
-
-    // service
     const transPageList = (list_) => {
         const result = [];
         for (key in categoryfilter) {
@@ -62,49 +49,30 @@
         }
         return result;
     };
-
-    // render (component)
-    const T_Pages = (sitemapData) => {
-        return (`
+    const sitemapMap = transPageList(locals.sitemap);
+    %>
+<div class="sitemapWrapper">
+    <header>
+        <h1>사이트맵</h1>
+    </header>
+    <main>
         <section class="t-pages" id="pages">
-            ${sitemapData.map((category)=>C_Category(category)).join("")}
+            <% sitemapMap.forEach((category)=>{%>
+                <article class="c-category">
+                    <h2><%=category.name %></h2>
+                    <div class="c-category__list">
+                        <ul class="m-pageList">
+                            <% category.pageList.forEach((page)=>{ %>
+                                <li>
+                                    <a href="<%=(locals.isTempServer) ? page.buildUrl : page.devUrl %>"><%=page.name %></a>
+                                </li>
+                            <%})%>
+                        </ul>
+                    </div>
+                </article>
+            <%})%>
         </section>
-        `);
-    };
-    const C_Category = (category) => {
-        const {key,name,pageList} = category;
-        return (`
-            <article class="c-category">
-                <h2>${name}</h2>
-                <div class="c-category__list">
-                    <ul class="m-pageList">
-                        ${pageList.map((page)=>M_Page(page)).join("")}
-                    </ul>
-                </div>
-            </article>
-        `);
-    };
-    const M_Page = (page) => {
-        const {name,devUrl,buildUrl} = page;
-        const devServerReg = new RegExp(devServerPort+"","g");
-        const href = (devServerReg.test(location.href)) ? devUrl : buildUrl; // 개발서버포트(3000) 이면 개발주소로 연결
-        return (`
-            <li>
-                <a href="${href}">${name}</a>
-            </li>
-        `);
-    };
-
-
-    // action
-    $(function(){
-        // 데이터 가져와서 실행
-        $.getJSON(sitemapUrl,(res)=>{
-            const sitemapData = transPageList(res);
-            $("#pages").html(T_Pages(sitemapData));
-        });
-    });
-</script>
-
+    </main>
+</div>
 </body>
 </html>

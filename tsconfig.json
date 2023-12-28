@@ -1,6 +1,6 @@
 {
     "compilerOptions":{
-        "typeRoots":["./node_modules/@types","./node_modules/sass/types/index.d","./gulp_modules/@types"],
+        "typeRoots":["./node_modules/@types","./gulp_modules/@types"],
         "esModuleInterop": true // ES6에 맞지 않는 경우, 맞도록 헬퍼함수로 감싸서 리턴 시켜줌
     }
 }

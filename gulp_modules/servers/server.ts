@@ -42,15 +42,22 @@ const createServer = (options:TServerOptions,callerName?:string):Promise<void> =
                 // 페이지 주소 구하기
                 const requestPath = `.${req.url.endsWith("/") ? req.url+"index.html" : req.url}`; // 접속할 상대경로 구하기(src로 부터)
                 const [renderPath,param] = requestPath.split("?");
-                const params = (param) ? JSON.parse('{"'+decodeURI(param.replace(/&/g,"\",\"").replace(/=/g,"\":\""))+'"}') : {};
+                const props = (param) ? JSON.parse('{"'+decodeURI(param.replace(/&/g,"\",\"").replace(/=/g,"\":\""))+'"}') : {};
 
                 // param location 추가
                 const pathname = renderPath.replace("./","/");
                 const paths = renderPath.replace("./","").split("/").map(str => str);
-                params.location = {pathname,paths}
+                props.location = {pathname,paths}
+
+                // 사이트맵 인경우의 처리
+                if(path.basename(Config.sitemapHtml) == path.basename(requestPath)){ // 지정된 사이트맵과 파일명이 같은가?
+                    const sitemap = JSON.parse(fs.readFileSync(Config.sitemapJson,"utf8"));
+                    props.sitemap = sitemap;
+                    props.isTempServer = (options.port == Config.sitemapPort); // 사이트맵 구하는용 임시서버 포트번호 비교
+                }
 
                 console.log(`${timeStamp().task}[${callerName}] ${renderPath}`);
-                res.render(renderPath,params);
+                res.render(renderPath,props);
             }catch(e){
                 res.end(0); // 에러가 생기면 request 종료를 위해 실행함
                 console.log(e);

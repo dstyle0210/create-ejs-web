@@ -57,8 +57,14 @@ task("watch",series(...watcherSeries));
 // 사이트맵 생성
 task("sitemap:save",async (done)=>{
     const sitemap:ISitemap = await import("./gulp_modules/tasks/sitemap");
-    await sitemap.save(Config.htmlDistOptions,Config.devServerRoot+"/sitemap.json"); // 개발서버 루트폴더에 저장
+    await sitemap.save(Config.htmlDistOptions,Config.sitemapJson); // 개발서버 루트폴더(.pub)에 저장된다.
     done();
+});
+task("sitemap:dist",async (done)=>{
+    const sitemap:{dist:(sitemapHtml:string)=>Promise<void>} = await import("./gulp_modules/tasks/sitemap");
+    await sitemap.dist(Config.sitemapHtml); // 개발서버 사이트맵 주소
+    done();
+    
 });
 task("sitemap",series("html:compiler","sitemap:save"));
 

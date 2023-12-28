@@ -1,3 +1,5 @@
+import path from "path";
+
 // 소스폴더 설정
 export const srcRoot = "./src"; // 소스폴더
 
@@ -12,6 +14,11 @@ export const devServerOptions = {
     root:devServerRoot,
     port:devPort
 }
+
+// 사이트맵 설정
+export const sitemapJson = devServerRoot+"/sitemap.json"; // PAGEDOC을 통해 저장되는 html 목록
+export const sitemapHtml = devServerRoot+"/sitemap.html"; // 사이트맵을 보여주는 템플릿
+export const sitemapPort = 3001; // 사이트맵 dist 할경우 적용할 임시서버 포트
 
 // 리소스 설정
 export const scssOptions = {
