@@ -1,7 +1,7 @@
 # create-ejs-web
 - ejs 기반 웹 퍼블리싱 보일러 플레이트 입니다.
 
----
+<div style="height:50px"></div>
 
 ## 설치(npx)
 1. [NodeJs](https://nodejs.org/) v18 이상 설치해 주세요.
@@ -10,15 +10,18 @@
 3. 아래의 코드를 실행창에 넣어 실행(설치)합니다.
 ```bash
 npx create-ejs-web my-web
+cd my-web
 npm run dev
 ```
 4. 브라우저에서 ```localhost:3000``` 을 입력해서 접속해봅니다.
 5. 혹시 오류나면 아래 추가내용 [QA](#qa)을 참고해주세요.
 6. 상세 설정은 "./gulp_modules/config.ts" 파일을 확인하세요.
 
----
+<div style="height:50px"></div>
+
 ## 스크립트 실행(npm run)
-세부실행 부분은 [테스크러너](#gulp-task)인 gulp에 의존하지만, 자주쓰는 실행은 npm run 을 통해서도 가능합니다.
+- 자주쓰는 실행은 npm run 을 통해서도 가능합니다.
+- 상세한 실행 방법은 아래 [gulp task](#gulp-task)를 참고하세요.
 ```bash
 # gulp dev 와 동일
 npm run dev
@@ -32,6 +35,8 @@ npm run sitemap
 | ```npm run sitemap``` | ```gulp sitemap``` | html 컴파일 및 페이지목록 저장 통합실행
 | ```npm run dev``` | ```gulp dev``` | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
 | ```npm run build``` | ```gulp build``` | 작업폴더(.src)를 산출물제출(배포)용으로 저장
+
+<div style="height:50px"></div>
 
 ## Gulp Task
 ```bash
@@ -68,9 +73,7 @@ gulp html:compiler
 | **```dist```** | ```html:dist```, ```scss:dist```, ```ts:dist```, ```image:dist``` | - | 임시폴더(.pub)내의 파일을 산출물제출(배포)용으로 저장합니다.
 | **```build```** | ```compile```, ```sitemap:save```, ```dist```, ```sitemap:dist``` | - | 저장된 위치의 파일을 전체 산출물제출(배포)용으로 저장합니다.
 
-
-
-
+<div style="height:50px"></div>
 
 ## 사이트맵 수집
 - 개발환경 실행 ```npm run dev``` 후 사이트맵으로 빠른 이동을 시킬수 있습니다.  
@@ -78,8 +81,7 @@ gulp html:compiler
 - 사이트맵은 [PAGEDOC](./@convention/pagedoc.md) 형식으로, 작성되면 개발환경 실행시 자동으로 크롤링 됩니다.  
 - 수동으로 가져오는 경우는 ```npm run sitemap``` 로 재수집 할수 있습니다.
 
-
----
+<div style="height:50px"></div>
 
 ## 폴더구조
 ### 작업환경 폴더구조
@@ -115,6 +117,7 @@ gulp html:compiler
 ```
 
 ---
+<div style="height:50px"></div>
 
 ## QA
 ### Q. npx를 실행하면 아래같은 에러가 나와요.
@@ -166,7 +169,8 @@ gulp : 이 시스템에서 스크립트를 실행할 수 없으므로 *** 파일
 - 기본 설정상 "./" 하위에 있는 파일은 build 되지 않습니다.
 - "./page/" 하위에 있는 파일만 빌드됩니다. (config.ts의 htmlDistOptions 변수를 확인해주세요.)
 - 기본 설정 상 사이트맵(sitemap.html)만 별도의 설정을 통해 build 됩니다. (config.ts의 sitemapHtml 변수를 확인해주세요.)
----
+
+<div style="height:50px"></div>
 
 ## 참고하세요.
 ### typescript(.ts)의 import 
@@ -190,7 +194,7 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 <%-include(`./_inc/subCommon.html`,{param:'sub.html 에서 파라매터 전달'}) %>
 ```
 
----
+<div style="height:50px"></div>
 
 ## 제공환경
 - [expressJs](https://expressjs.com/)
@@ -198,7 +202,10 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 - [SCSS](https://sass-lang.com/)
 - [typescript](https://www.typescriptlang.org)
 
----
+<div style="height:50px"></div>
+
+## 업데이트 이력 v0.8.1
+- 설명 일부가 변경 되었습니다.
 
 ## 업데이트 이력 v0.8.0
 - 산출물을 위한 빌드가 가능합니다!
