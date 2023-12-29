@@ -47,13 +47,6 @@ task("server:dev",async (done)=>{
     done();
 });
 
-// 실무용 통합 Task
-const compilerSeries = compilers.map((taskItem)=>taskItem.name+":compiler");
-const watcherSeries = watchers.map((taskItem)=>taskItem.name+":watcher");
-task("compile",series("lib:copy",...compilerSeries));
-task("watch",series(...watcherSeries));
-
-
 // 사이트맵 생성
 task("sitemap:save",async (done)=>{
     const sitemap:ISitemap = await import("./gulp_modules/tasks/sitemap");
@@ -64,10 +57,14 @@ task("sitemap:dist",async (done)=>{
     const sitemap:{dist:(sitemapHtml:string)=>Promise<void>} = await import("./gulp_modules/tasks/sitemap");
     await sitemap.dist(Config.sitemapHtml); // 개발서버 사이트맵 주소
     done();
-    
 });
 task("sitemap",series("html:compiler","sitemap:save"));
 
+// 실무용 통합 Task
+const compilerSeries = compilers.map((taskItem)=>taskItem.name+":compiler");
+const watcherSeries = watchers.map((taskItem)=>taskItem.name+":watcher");
+task("compile",series("lib:copy",...compilerSeries,"image:copy"));
+task("watch",series(...watcherSeries));
 
 // 퍼블시작
 task("dev",series("watch","compile","sitemap:save","server:dev"));
@@ -86,8 +83,5 @@ task("html:build",series("html:compiler","html:dist"));
 task("scss:build",series("scss:compiler","scss:dist"));
 task("ts:build",series("ts:compiler","ts:dist"));
 task("image:build",series("image:copy","image:dist"));
-
-
-task("build",async () => {
-    console.log("빌드");
-})
+task("dist",series("html:dist","scss:dist","ts:dist","image:dist"));
+task("build",series("compile","sitemap:save","dist","sitemap:dist"));

@@ -17,36 +17,60 @@ npm run dev
 6. 상세 설정은 "./gulp_modules/config.ts" 파일을 확인하세요.
 
 ---
-## Gulp Task
-```bash
-# gulp 테스트명 으로 실행
-```
-| 테스크명 | 연결 테스크 | 기능
-|---|---|---|
-| html:compiler | - | 지정된 위치의 ".ejs" 또는 ".html" 을 ".html" 확장자인, ejs로 컴파일합니다.
-| html:watcher | - | 지정된 위치의 ".ejs" 또는 ".html" 가 변경 될 경우, 컴파일 되도록 감시합니다.
-| scss:compiler | - | 지정된 위치의 ".scss"을 컴파일합니다.
-| scss:watcher | - | 지정된 위치의 ".scss"가 변경 될 경우 컴파일 되도록 감시합니다.
-| ts:compiler | - | 지정된 위치의 ".ts"을 컴파일합니다.
-| ts:watcher | - | 지정된 위치의 ".ts"가 변경 될 경우 컴파일 되도록 감시합니다.
-| image:copy | - | 지정된 위치의 ".jpg, .png, .gif, .ico"을 임시폴더로 복사합니다.
-| image:watcher | - | 지정된 위치의 ".jpg, .png, .gif, .ico" 가 변경 될 경우 임시폴더로 복사 되도록 감시합니다.
-| lib:copy | - | 라이브러리 파일들을 임시폴더로 복사합니다.( ex : ./src/assets/lib )
-| **compile** | lib:copy, html:compiler,  scss:compiler,  ts:compiler | 컴파일러 통합 실행
-| **watch** | html:watcher,  scss:watcher,  ts:watcher | 감시자 통합 실행
-| server:dev | - | 임시폴더(ex : .pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
-| sitemap:save | - | 임시폴더(ex : .pub)을 루트로 "./pages/" 하위의 html의 PAGEDOC 정보를 수집하여 sitemap.json을 생성합니다.
-| **sitemap** | html:compiler, sitemap:save | html 컴파일 및 PAGEDOC 수집 통합실행 합니다.
-| **dev** | watch, compile, sitemap:save, server:dev | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
-
-## 테스크 실행
-세부실행 부분은 gulp에 의존하지만, 자주쓰는 실행(두꺼운글씨)은 npm run 을 통해서도 가능합니다.
+## 스크립트 실행(npm run)
+세부실행 부분은 [테스크러너](#gulp-task)인 gulp에 의존하지만, 자주쓰는 실행은 npm run 을 통해서도 가능합니다.
 ```bash
 # gulp dev 와 동일
 npm run dev
 # gulp sitemap 와 동일
 npm run sitemap
 ```
+| 스크립트명 | 연결 Gulp 테스크 | 기능
+|---|---|---|
+| ```npm run compile``` | ```gulp compile``` | 작업폴더(.src) 컴파일러 통합 실행
+| ```npm run watch``` | ```gulp watch``` | 작업폴더(.src) 감시자 통합 실행
+| ```npm run sitemap``` | ```gulp sitemap``` | html 컴파일 및 페이지목록 저장 통합실행
+| ```npm run dev``` | ```gulp dev``` | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
+| ```npm run build``` | ```gulp build``` | 작업폴더(.src)를 산출물제출(배포)용으로 저장
+
+## Gulp Task
+```bash
+# gulp 테스크명 으로 실행
+gulp dev
+gulp html:compiler
+```
+| Task Name | Series Tasks | config.ts Const | 설명
+|---|---|---|---|
+| ```html:compiler``` | - | htmlOptions | 작업폴더(src) 내 ".ejs" 또는 ".html" 을 ".html" 확장자인, ejs로 컴파일합니다.
+| ```html:watcher``` | - | htmlOptions | 작업폴더(src) 내 ".ejs" 또는 ".html" 가 변경 될 경우, 컴파일 되도록 감시합니다.
+| ```html:dist``` | - | htmlDistOptions | 페이지목록(sitemap.json)을 산출물제출(배포)용으로 저장합니다.
+| ```html:build``` | ```html:compiler```, ```html:dist``` | - | html 산출물을 위한 통합빌드
+| ```scss:compiler``` | - | scssOptions | 작업폴더(src) 내 ".scss"을 컴파일합니다.
+| ```scss:watcher``` | - | scssOptions | 작업폴더(src) 내 ".scss"가 변경 될 경우 컴파일 되도록 감시합니다.
+| ```scss:dist``` | - | cssDistOptions | 임시폴더(.pub)의 ".css"을 산출물제출(배포)용으로 저장합니다.
+| ```scss:build``` | ```scss:compiler```, ```scss:dist``` | - | css(scss) 산출물을 위한 통합빌드
+| ```ts:compiler``` | - | tsOptions | 작업폴더(src) 내 ".ts"을 컴파일합니다.
+| ```ts:watcher``` | - | tsOptions | 작업폴더(src) 내 ".ts"가 변경 될 경우 컴파일 되도록 감시합니다.
+| ```ts:dist``` | - | jsDistOptions | 임시폴더(.pub)의 ".js"을 산출물제출(배포)용으로 저장합니다.
+| ```ts:build``` | ```ts:compiler```, ```ts:dist``` | - | ts(js)파일 산출물을 위한 통합빌드
+| ```image:copy``` | - | imageOptions | 작업폴더(src) 내 ".jpg, .png, .gif, .ico"을 임시폴더로 복사합니다.
+| ```image:watcher``` | - | imageOptions | 작업폴더(src) 내 ".jpg, .png, .gif, .ico" 가 변경 될 경우 임시폴더로 복사합니다.
+| ```image:dist``` | - | imageDistOptions | 임시폴더(.pub)의 ".jpg, .png, .gif, .ico"을 산출물제출(배포)용으로 저장합니다.
+| ```image:build``` | ```image:copy```, ```image:dist``` | - | 이미지파일 산출물을 위한 통합빌드
+| ```lib:copy``` | - | libOptions | 라이브러리 파일들을 임시폴더(.pub)로 복사합니다.
+| **```compile```** | ```lib:copy```, ```html:compiler```,  ```scss:compiler```,  ```ts:compiler```, ```image:copy``` | - | 컴파일러 통합 실행
+| **```watch```** | ```html:watcher```,  ```scss:watcher```,  ```ts:watcher```, ```image:watcher``` | - | 감시자 통합 실행
+| ```server:dev``` | - | devServerOptions |임시폴더(.pub)을 루트로 서버가 실행 됩니다. (기본포트 3000)
+| ```sitemap:save``` | - | htmlDistOptions, sitemapJson | 임시폴더(.pub)을 루트로 htmlDistOptions.src 하위의 html의 PAGEDOC 정보를 수집하여 sitemap.json을 생성합니다.
+| ```sitemap:dist``` | - | sitemapHtml | sitemap.json의 기반으로, 빌드용 sitemap.html 파일을 생성됩니다.
+| **```sitemap```** | ```html:compiler```, ```sitemap:save``` | - | html 컴파일 및 PAGEDOC 수집 통합실행 합니다.
+| **```dev```** | ```watch```, ```compile```, ```sitemap:save```, ```server:dev``` | - | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
+| **```dist```** | ```html:dist```, ```scss:dist```, ```ts:dist```, ```image:dist``` | - | 임시폴더(.pub)내의 파일을 산출물제출(배포)용으로 저장합니다.
+| **```build```** | ```compile```, ```sitemap:save```, ```dist```, ```sitemap:dist``` | - | 저장된 위치의 파일을 전체 산출물제출(배포)용으로 저장합니다.
+
+
+
+
 
 ## 사이트맵 수집
 - 개발환경 실행 ```npm run dev``` 후 사이트맵으로 빠른 이동을 시킬수 있습니다.  
@@ -99,12 +123,13 @@ npm ERR! path C:\Users\사용자명\AppData\Roaming\npm
 npm ERR! errno -4058
 npm ERR! enoent ENOENT: no such file or directory ...
 ```
-npm이 처음 설치되었거나, 글로벌 설치가 한번도 없었어서 그래요.  
-정확하겐, ```C:\Users\사용자명\AppData\Roaming\npm``` 폴더가 없어서 그래요.
+- npm이 처음 설치되었거나, 글로벌 설치가 한번도 없었어서 그렇습니다.
+- 정확하겐, ```C:\Users\사용자명\AppData\Roaming\npm``` 폴더가 없어서 그래요.
 ```
 npm i gulp-cli -g
 ```
-를 한번 설치해주시고(gulp 글로벌 설치 입니다.) , npx로 재설치 해보세요.
+- 위의 구문을 터미널에서 실행해주세요. (gulp 글로벌 설치 입니다.)
+- gulp 설치가 완료되면, ```npx create-ejs-web my-web``` 로 재설치 해보세요.
 
 ### Q. gulp 가 실행할수 없는 프로그램 이래요.
 ```
@@ -131,13 +156,16 @@ gulp : 이 시스템에서 스크립트를 실행할 수 없으므로 *** 파일
 3. "y" 하시고 엔터 하시면 됩니다.
 
 ### Q. ```** vulnerabilities (* moderate, ** high)``` 이런식으로 나와요.
-CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래된거라(...) 그렇습니다.   
-정상 실행됩니다. 마음에 안드시겠지만 그냥 써주시면...
+- CSS의 프로퍼티를 정렬해주는 라이브러리(gulp-csscomb) 가 오래된거라(...) 그렇습니다.
 
 ### Q. ".pub" 폴더랑 "build" 폴더가 생겼어요.
-".pub" 폴더는 개발서버용 임시 폴더 입니다.(임시 이지만, 중요한 폴더예요. src보다 더 중요할수도 있음)  
-"build" 폴더는 배포용폴더 라고 하는데, 웹퍼블리싱 완료 후에 산출물 제출용이예요.
+- ".pub" 폴더는 개발서버용 임시 폴더 입니다.(임시 이지만, 중요한 폴더예요. src보다 더 중요할수도 있음)  
+- "build" 폴더는 배포용폴더 라고 하는데, 웹퍼블리싱 완료 후에 산출물 제출용이예요.
 
+### Q. "./index.html"이 build 되지 않아요.
+- 기본 설정상 "./" 하위에 있는 파일은 build 되지 않습니다.
+- "./page/" 하위에 있는 파일만 빌드됩니다. (config.ts의 htmlDistOptions 변수를 확인해주세요.)
+- 기본 설정 상 사이트맵(sitemap.html)만 별도의 설정을 통해 build 됩니다. (config.ts의 sitemapHtml 변수를 확인해주세요.)
 ---
 
 ## 참고하세요.
@@ -172,6 +200,8 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 ---
 
-## 업데이트 이력 v0.7.2
-- 사이트맵 빌드코드 추가
-- tsconfig 의 sass 라이브러리 vscode 버그 수정
+## 업데이트 이력 v0.8.0
+- 산출물을 위한 빌드가 가능합니다!
+- 빌드는 ```npm run build``` 로 실행 가능합니다.
+- 빌드는 src의 자료를 순수 html,js,css 파일로 ```./build``` 폴더에 저장 됩니다!
+- 빌드하면, sitemap 도 함께 저장되어, build 폴더를 통해 링크 이동이 가능합니다.
