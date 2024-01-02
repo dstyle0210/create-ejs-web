@@ -9,8 +9,11 @@
 3. 설치할  폴더로 이동합니다. ```cd 작업할 폴더위치```
 3. 아래의 코드를 실행창에 넣어 실행(설치)합니다.
 ```bash
+# ejs 보일러플레이트 설치
 npx create-ejs-web my-web
+# 설치된 폴더로 이동
 cd my-web
+# 개발환경 실행
 npm run dev
 ```
 4. 브라우저에서 ```localhost:3000``` 을 입력해서 접속해봅니다.
@@ -30,12 +33,12 @@ npm run sitemap
 ```
 | 스크립트명 | 연결 Gulp 테스크 | 기능
 |---|---|---|
-| ```npm run compile``` | ```gulp compile``` | 작업폴더(.src) 컴파일러 통합 실행
-| ```npm run watch``` | ```gulp watch``` | 작업폴더(.src) 감시자 통합 실행
-| ```npm run sitemap``` | ```gulp sitemap``` | html 컴파일 및 페이지목록 저장 통합실행
-| ```npm run guide``` | ```gulp guide``` | 작업폴더(.src)를 산출물제출(배포)용으로 저장
+| ```npm run compile``` | ```gulp compile``` | 작업폴더(src) 컴파일러 통합 실행
+| ```npm run watch``` | ```gulp watch``` | 작업폴더(src) 감시자 통합 실행
+| ```npm run sitemap``` | ```gulp sitemap``` | html 컴파일 및 PAGEDOC 수집 통합실행 합니다.
+| ```npm run guide``` | ```gulp guide:build``` | 가이드폴더(src/@guide)를 컴파일 및 산출물제출(배포)용으로 저장
 | ```npm run dev``` | ```gulp dev``` | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
-| ```npm run build``` | ```gulp build``` | 작업폴더(.src)를 산출물제출(배포)용으로 저장
+| ```npm run build``` | ```gulp build``` | 작업폴더(src)를 산출물제출(배포)용으로 저장
 
 
 <div style="height:50px"></div>
@@ -86,6 +89,11 @@ gulp html:compiler
 - 사이트맵은 [PAGEDOC](./@convention/pagedoc.md) 형식으로, 작성되면 개발환경 실행시 자동으로 크롤링 됩니다.  
 - 수동으로 가져오는 경우는 ```npm run sitemap``` 로 재수집 할수 있습니다.
 
+## 가이드 작성
+- 가이드는 http://localhost:3000/@guide/index.html 로 접근 가능 합니다.   
+- 가이드작성에 관한 내용은 [Guide](./@convention/guide.md)를 참고하세요.
+- 수동으로 내보낼때는 ```npm run guide``` 로 내보낼 수 있습니다.
+
 <div style="height:50px"></div>
 
 ## 폴더구조
@@ -107,6 +115,8 @@ gulp html:compiler
 ```
 ./src
 +-- /@guide // 웹퍼블리싱 가이드
+|   +-- lib // 코드스니핏 및 markdown css
+|   +-- index.md // 가이드 인덱스 마크다운
 +-- /assets
 |   +-- scss // scss을 모아주는(@import) 엔트리 성격의 scss
 |   +-- ts // typescript을 모아주는(import) 엔트리 성격의 ts
