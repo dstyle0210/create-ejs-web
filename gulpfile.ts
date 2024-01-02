@@ -8,9 +8,10 @@ const scss = {name:"scss",module:"scss",options:Config.scssOptions,dists:Config.
 const ts = {name:"ts",module:"typescript",options:Config.tsOptions,dists:Config.jsDistOptions};
 const image = {name:"image",module:"image",options:Config.imageOptions,dists:Config.imageDistOptions};
 const lib = {name:"lib",module:"lib",options:Config.libOptions};
+const guide = {name:"guide",module:"guide",options:Config.guideOptions,dists:Config.guideDistOptions};
 
 // 컴파일 테스크 등록
-const compilers = [html,scss,ts];
+const compilers = [html,scss,ts,guide];
 compilers.forEach((taskItem)=>{
     task(`${taskItem.name}:compiler`,async (done)=>{
         const module:ICompilerTask = await import("./gulp_modules/tasks/"+taskItem.module);
@@ -36,6 +37,16 @@ copys.forEach((taskItem)=>{
     task(`${taskItem.name}:copy`,async (done)=>{
         const module:ICopyTask = await import("./gulp_modules/tasks/"+taskItem.module);
         await module.copy(taskItem.options);
+        done();
+    });
+});
+
+// 산출물 빌드
+const dists = [html,scss,ts,image,guide];
+dists.forEach((taskItem)=>{
+    task(`${taskItem.name}:dist`,async (done)=>{
+        const module:IDistTask = await import("./gulp_modules/tasks/"+taskItem.module);
+        await module.dist(taskItem.dists);
         done();
     });
 });
@@ -67,21 +78,13 @@ task("compile",series("lib:copy",...compilerSeries,"image:copy"));
 task("watch",series(...watcherSeries));
 
 // 퍼블시작
-task("dev",series("watch","compile","sitemap:save","server:dev"));
+task("dev",series("watch","guide:compiler","compile","sitemap:save","server:dev"));
 
-
-// 산출물 빌드
-const dists = [html,scss,ts,image];
-dists.forEach((taskItem)=>{
-    task(`${taskItem.name}:dist`,async (done)=>{
-        const module:IDistTask = await import("./gulp_modules/tasks/"+taskItem.module);
-        await module.dist(taskItem.dists);
-        done();
-    });
-});
+// 통합빌드
 task("html:build",series("html:compiler","html:dist"));
 task("scss:build",series("scss:compiler","scss:dist"));
 task("ts:build",series("ts:compiler","ts:dist"));
 task("image:build",series("image:copy","image:dist"));
-task("dist",series("html:dist","scss:dist","ts:dist","image:dist"));
-task("build",series("compile","sitemap:save","dist","sitemap:dist"));
+task("guide:build",series("guide:compiler","guide:dist"));
+task("dist",series("html:dist","scss:dist","ts:dist","image:dist","guide:dist"));
+task("build",series("compile","sitemap:save","dist","sitemap:dist","guide:build"));

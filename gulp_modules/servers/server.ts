@@ -55,7 +55,6 @@ const createServer = (options:TServerOptions,callerName?:string):Promise<void> =
                     props.sitemap = sitemap;
                     props.isTempServer = (options.port == Config.sitemapPort); // 사이트맵 구하는용 임시서버 포트번호 비교
                 }
-
                 console.log(`${timeStamp().task}[${callerName}] ${renderPath}`);
                 res.render(renderPath,props);
             }catch(e){

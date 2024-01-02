@@ -33,8 +33,10 @@ npm run sitemap
 | ```npm run compile``` | ```gulp compile``` | 작업폴더(.src) 컴파일러 통합 실행
 | ```npm run watch``` | ```gulp watch``` | 작업폴더(.src) 감시자 통합 실행
 | ```npm run sitemap``` | ```gulp sitemap``` | html 컴파일 및 페이지목록 저장 통합실행
+| ```npm run guide``` | ```gulp guide``` | 작업폴더(.src)를 산출물제출(배포)용으로 저장
 | ```npm run dev``` | ```gulp dev``` | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
 | ```npm run build``` | ```gulp build``` | 작업폴더(.src)를 산출물제출(배포)용으로 저장
+
 
 <div style="height:50px"></div>
 
@@ -62,6 +64,9 @@ gulp html:compiler
 | ```image:watcher``` | - | imageOptions | 작업폴더(src) 내 ".jpg, .png, .gif, .ico" 가 변경 될 경우 임시폴더로 복사합니다.
 | ```image:dist``` | - | imageDistOptions | 임시폴더(.pub)의 ".jpg, .png, .gif, .ico"을 산출물제출(배포)용으로 저장합니다.
 | ```image:build``` | ```image:copy```, ```image:dist``` | - | 이미지파일 산출물을 위한 통합빌드
+| ```guide:compiler``` | - | guideOptions | 가이드폴더(src/@guide) 내 markdown(.md)파일을 컴파일합니다.
+| ```guide:dist``` | - | guideDistOptions | 임시폴더의 가이드(.pub/@guide)를 산출물제출(배포)용으로 저장합니다.
+| ```guide:build``` | - | guideDistOptions | 가이드파일 산출물을 위한 통합빌드
 | ```lib:copy``` | - | libOptions | 라이브러리 파일들을 임시폴더(.pub)로 복사합니다.
 | **```compile```** | ```lib:copy```, ```html:compiler```,  ```scss:compiler```,  ```ts:compiler```, ```image:copy``` | - | 컴파일러 통합 실행
 | **```watch```** | ```html:watcher```,  ```scss:watcher```,  ```ts:watcher```, ```image:watcher``` | - | 감시자 통합 실행
@@ -71,7 +76,7 @@ gulp html:compiler
 | **```sitemap```** | ```html:compiler```, ```sitemap:save``` | - | html 컴파일 및 PAGEDOC 수집 통합실행 합니다.
 | **```dev```** | ```watch```, ```compile```, ```sitemap:save```, ```server:dev``` | - | 컴파일 및 감시자, 사이트맵생성, 서버시작 통합 실행
 | **```dist```** | ```html:dist```, ```scss:dist```, ```ts:dist```, ```image:dist``` | - | 임시폴더(.pub)내의 파일을 산출물제출(배포)용으로 저장합니다.
-| **```build```** | ```compile```, ```sitemap:save```, ```dist```, ```sitemap:dist``` | - | 저장된 위치의 파일을 전체 산출물제출(배포)용으로 저장합니다.
+| **```build```** | ```compile```, ```sitemap:save```, ```dist```, ```sitemap:dist```, ```guide:build``` | - | 저장된 위치의 파일을 전체 산출물제출(배포)용으로 저장합니다.
 
 <div style="height:50px"></div>
 
@@ -203,6 +208,12 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 - [typescript](https://www.typescriptlang.org)
 
 <div style="height:50px"></div>
+
+## 업데이트 이력 v0.8.2
+- 설명 일부가 변경 되었습니다.
+- guide 가 컴파일 됩니다. (```npm run guide```)
+- guide는 퍼블리싱 산출물 제출을 위한 설명용도 입니다.
+- 자세한 사항은 [guide](./@convention/guide.md)를 참고하세요.
 
 ## 업데이트 이력 v0.8.1
 - 설명 일부가 변경 되었습니다.

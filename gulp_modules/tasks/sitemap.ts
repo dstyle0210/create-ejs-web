@@ -56,24 +56,29 @@ import type {IServer} from "../@types/gulpfile.d";
 import * as Config from "../config"; // 해당 포트 및 폴더 변경 가능
 import findPidFromPort from "../util/findPidFromPort";
 import request from "request";
-export const dist = async (sitemapHtml:string):Promise<void> => {
-    let pid = await findPidFromPort(Config.sitemapPort); // 서버실행 여부 확인
-    let isDevServerReady = !!pid; // 서버가 있다면 true , 없으면 false.
-    if(!isDevServerReady){ // 서버가 없었으면 실행 시킨다.
-        const server:IServer = await import("../servers/server");
-        await server.dev({root:Config.devServerRoot,port:Config.sitemapPort});
-    };
-    const url = `http://localhost:${Config.sitemapPort}${sitemapHtml.replace(Config.devServerRoot,"")}`;
-    const fileName = path.basename(url);
-    const htmlRaw = await asyncRequest(url);
-    fs.writeFileSync(Config.buildServerRoot+"/"+fileName,htmlRaw,"utf8");
+export const dist = (sitemapHtml:string):Promise<void> => {
+    return new Promise(async (resolve,reject)=>{
+        let pid = await findPidFromPort(Config.sitemapPort); // 서버실행 여부 확인
+        let isDevServerReady = !!pid; // 서버가 있다면 true , 없으면 false.
+        if(!isDevServerReady){ // 서버가 없었으면 실행 시킨다.
+            const server:IServer = await import("../servers/server");
+            await server.dev({root:Config.devServerRoot,port:Config.sitemapPort});
+        };
+        const url = `http://localhost:${Config.sitemapPort}${sitemapHtml.replace(Config.devServerRoot,"")}`;
+        const fileName = path.basename(url);
+        const htmlRaw = await asyncRequest(url);
+        fs.writeFileSync(Config.buildServerRoot+"/"+fileName,htmlRaw,"utf8");
 
-    if(!isDevServerReady){
-        setTimeout(()=>{
-            console.log(`${timeStamp().task}[sitemap:dist] process.kill , port ${Config.sitemapPort}`);
-            process.kill(pid);
-        },2000);
-    };
+        if(!isDevServerReady){
+            setTimeout(()=>{
+                console.log(`${timeStamp().task}[sitemap:dist] process.kill , port ${Config.sitemapPort}`);
+                process.kill(pid);
+            },1000);
+            setTimeout(()=>{
+                resolve();
+            },2000);
+        };
+    });
 }
 
 const asyncRequest = (url:string):Promise<string> => {

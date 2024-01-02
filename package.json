@@ -6,6 +6,7 @@
     "compile": "gulp compile",
     "watch": "gulp watch",
     "dev": "gulp dev",
+    "guide": "gulp guide:build",
     "sitemap": "gulp sitemap",
     "build": "gulp build"
   },

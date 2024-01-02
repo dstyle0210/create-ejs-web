@@ -7,7 +7,8 @@ export const srcRoot = "./src"; // 소스폴더
 export const devServerRoot = "./.pub"; // 개발서버 루트폴더
 export const devServerStatics = [ // 개발서버 스테틱 리소스 폴더
     {route:"/assets",path:devServerRoot+"/assets"}, // css, js
-    {route:"/images",path:devServerRoot+"/images"} // image
+    {route:"/images",path:devServerRoot+"/images"}, // image
+    {route:"/@guide",path:devServerRoot+"/@guide"} // guide
 ];
 export const devPort = 3000; // 개발용 서버 포트 ( http://localhost:3000 )
 export const devServerOptions = {
@@ -40,7 +41,7 @@ export const imageOptions = {
 }
 
 export const htmlOptions = {
-    src:srcRoot+"/**/*.{ejs,html}", // ejs,html 파일들 위치
+    src:[srcRoot+"/**/*.{ejs,html}","!"+srcRoot+"/@guide/_inc/*.html"], // ejs,html 파일들 위치
     base:srcRoot,
     dist:devServerRoot // 컴파일 된 파일들이 저장될 위치(base 기준)
 }
@@ -49,6 +50,13 @@ export const libOptions = {
     src:srcRoot+"/assets/lib/**/*.{js,css}",
     base:srcRoot+"/assets/lib",
     dist:devServerRoot+"/assets/lib"
+}
+
+// 가이드 작성 옵션
+export const guideOptions = {
+    src:srcRoot+"/@guide/**/*.md",
+    base:srcRoot+"/@guide",
+    dist:devServerRoot+"/@guide"
 }
 
 /**
@@ -84,8 +92,8 @@ export const htmlDistOptions = {
 }
 
 // 가이드 작성 옵션
-export const guideOptions = {
-    src:srcRoot+"/@guide/**/*.{md,ejs,html}",
-    base:srcRoot+"/@guide",
-    dist:devServerRoot+"/@guide"
+export const guideDistOptions = {
+    src:devServerRoot+"/@guide/**/*.{html,css,js}",
+    base:devServerRoot+"/@guide",
+    dist:buildServerRoot+"/@guide"
 }
