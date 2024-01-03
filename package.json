@@ -1,6 +1,6 @@
 {
   "name": "create-ejs-web",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "ejs 기반 웹 퍼블리싱 보일러 플레이트",
   "scripts": {
     "compile": "gulp compile",
@@ -24,7 +24,7 @@
     "Boiler Plate",
     "boilerplate"
   ],
-  "author": "@dstyle0210(A.K.A mabongpapa)",
+  "author": "Mabongpapa <dstyle0210@gmail.com> (https://dstyle0210.github.io/)",
   "license": "MIT",
   "engines": {
     "node": ">=18"
@@ -55,7 +55,9 @@
     "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
     "marked": "^11.0.1",
+    "pretty": "^2.0.0",
     "request": "^2.88.2",
+    "rimraf": "^5.0.5",
     "sass": "^1.69.5",
     "ts-node": "^10.9.1"
   }

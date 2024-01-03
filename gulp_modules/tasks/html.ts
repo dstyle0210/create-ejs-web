@@ -17,6 +17,8 @@ import request from "request";
 import {crawler} from "./sitemap"; // dist 목록 가져오기
 import * as Config from "../config"; // 해당 포트 및 폴더 변경 가능
 import findPidFromPort from "../util/findPidFromPort";
+import asyncRequest from "../util/asyncRequestPrettyHtml"; // URL to HTML
+
 
 // 시작시 전체 컴파일용
 export const compiler = async (options:{src:string,base:string,dist:string}) => {
@@ -75,7 +77,6 @@ export const dist = (options:{src:string,base:string,dist:string}):Promise<void>
         
         for await (const page of pageMap){
             const url = `http://localhost:${Config.devPort}${page.devUrl}`;
-            console.log(url);
             const htmlRaw = await asyncRequest(url);
             const buildPath = Config.buildServerRoot+page.buildUrl;
             fs.mkdirSync(path.dirname(buildPath),{recursive:true});
@@ -94,12 +95,3 @@ export const dist = (options:{src:string,base:string,dist:string}):Promise<void>
         resolve();
     });
 };
-
-const asyncRequest = (url:string):Promise<string> => {
-    return new Promise((resolve,reject)=>{
-        request(url,(error,response,body)=>{
-            // TODO : 디플로이 로직 추가필요.
-            resolve(body);
-        });
-    });
-}

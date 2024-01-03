@@ -10,6 +10,7 @@ import path from "path";
 import fs from "fs";
 import glob from "fast-glob";
 import timeStamp from "../util/getTimeStamp";
+import asyncRequest from "../util/asyncRequestPrettyHtml"; // URL to HTML
 
 const getMatchText = (str:string,reg:RegExp) => str.match(reg) ? str.match(reg)[0] : "null";
 const getMatchArray = (str:string,reg:RegExp) => str.match(reg) ? str.match(reg) : [];
@@ -78,14 +79,5 @@ export const dist = (sitemapHtml:string):Promise<void> => {
                 resolve();
             },2000);
         };
-    });
-}
-
-const asyncRequest = (url:string):Promise<string> => {
-    return new Promise((resolve,reject)=>{
-        request(url,(error,response,body)=>{
-            // TODO : 디플로이 로직 추가필요.
-            resolve(body);
-        });
     });
 }
