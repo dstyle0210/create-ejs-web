@@ -219,6 +219,11 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 <div style="height:50px"></div>
 
+## 업데이트 이력 v0.8.3b
+- 인스톨(npx) 시 git제외조건 파일 삭제처리.
+- 인스톨 이후 나오는 설명 수정
+
+
 ## 업데이트 이력 v0.8.3
 - 인스톨 시 삭제를 위한 모듈(rimraf)이 추가되었습니다.
 - HTML 배포시 포메팅이 되도록 변경되었습니다.(page , sitemap, guide)

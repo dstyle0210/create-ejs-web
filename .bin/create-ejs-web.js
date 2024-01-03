@@ -27,8 +27,11 @@ async function main() {
         execSync("npx rimraf ./.git"); // git 리파지토리 제거
         execSync("npx rimraf ./.bin"); // 설치파일 제거
         execSync("npx rimraf ./LICENSE"); // 라이센스 제거
-
-        console.log("설치가 완료되었습니다. 'npm run dev' 를 실행해보세요. The installation is done, Please run 'npm run dev'.");
+        execSync("npx rimraf ./.gitignore"); // git등록제외 파일제거
+        
+        console.log("설치가 완료되었습니다. 아래와 같이 입력해보세요. The installation is done, Please run.");
+        console.log(`cd ${projectName}`);
+        console.log("npm run dev");
     } catch (error) {
         console.log(error);
     }
