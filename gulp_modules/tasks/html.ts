@@ -52,7 +52,7 @@ const ejsCompileToHtml = async (options:{src:string,dist:string},callerName?:str
     let _htmlRaw = htmlRaw
         .replace(/(<include)\s*(src=("|'))(.+)("|')\s*(options=("|'))(.+)(("|'))\s*(\/)?(>)(<\/include>)?/gi,"<%-include(`$4`,$8) %>") // 옵션이 포함된 인클루드 구문 변환
         .replace(/(<include)\s*(src=("|'))(.+)("|')\s*(\/)?(>)(<\/include>)?/gi,"<%-include(`$4`) %>") // 옵션이 없는 인클루드 구문 변환
-        .replace(/(include')(.+)(.ejs)(')/gi,"$1$2.html$4"); // ejs로 로드 했을경우, html파일로 변환
+        .replace(/(include\(`)(.+)(.ejs)(`)/gi,"$1$2.html$4"); // ejs로 로드 했을경우, html파일로 변환
     if(!isPage) _htmlRaw.replace(/(<!-- HTMLDOC)((?!-->)[\n\d\D])*(-->)/gi,""); // 페이지가 아니라면, HTMLDOC 삭제
 
     fs.mkdirSync(path.dirname(distPath),{recursive:true}); // 저장할 폴더 생성
