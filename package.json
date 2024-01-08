@@ -1,6 +1,6 @@
 {
   "name": "create-ejs-web",
-  "version": "0.8.4",
+  "version": "0.8.6",
   "description": "ejs 기반 웹 퍼블리싱 보일러 플레이트",
   "scripts": {
     "compile": "gulp compile",
