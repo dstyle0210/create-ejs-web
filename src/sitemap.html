@@ -20,7 +20,7 @@
         header .img img{width:100%;height:100%;}
 
         /* 템플릿 */
-        .t-pages{width:100%;display:grid;grid-template-columns: repeat(auto-fit,minmax(300px,1fr));grid-gap:10px;grid-template-rows: masonry;}
+        .t-pages{width:100%;display:grid;grid-template-columns: repeat(auto-fit,minmax(300px,1fr));grid-gap:10px;}
 
         /* 컴포넌트 */
         .c-category{padding:10px;}
@@ -29,9 +29,15 @@
 
         /* 모듈 */
         .m-pageList{padding:10px;background:#f5f5f5;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+        .m-pageList li{display:flex;}
         .m-pageList li:nth-child(n+2){margin-top:5px;}
+        .m-pageList li details{position:relative;margin-left:auto;}
+        .m-pageList li details summary{cursor:pointer;}
+
+        .commentList{position:absolute;top:20px;right:0;padding:10px;width:300px;z-index:5;background:#f5f5f5;border:1px solid #ccc;}
+        
     </style>
-    <script type="text/javascript" charset="utf-8" src="/assets/lib/jquery/jquery-3.7.1.min.js"></script> <!-- jquery built-in-->
+    <script src="/assets/lib/jquery/jquery-3.7.1.min.js"></script> <!-- jquery built-in-->
 </head>
 <body>
     <%
@@ -56,7 +62,7 @@
         <h1>사이트맵</h1>
     </header>
     <main>
-        <section class="t-pages" id="pages">
+        <div class="t-pages" id="pages">
             <% sitemapMap.forEach((category)=>{%>
                 <article class="c-category">
                     <h2><%=category.name %></h2>
@@ -65,13 +71,25 @@
                             <% category.pageList.forEach((page)=>{ %>
                                 <li>
                                     <a href="<%=(locals.isTempServer) ? page.buildUrl : page.devUrl %>"><%=page.name %></a>
+                                    <%if(page.stats){%>
+                                    <details>
+                                        <summary><%=page.stats %></summary>
+                                        <%if(page.comments.length){%>
+                                        <ul class="commentList">
+                                            <% page.comments.forEach((comment)=>{%>
+                                            <li><%=comment %></li>
+                                            <%})%>
+                                        </ul>
+                                        <%}%>
+                                    </details>
+                                    <%}%>
                                 </li>
                             <%})%>
                         </ul>
                     </div>
                 </article>
             <%})%>
-        </section>
+        </div>
     </main>
 </div>
 </body>

@@ -219,10 +219,15 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 <div style="height:50px"></div>
 
+## 업데이트 이력 v0.8.5
+- 페이지의 상태(@stats)와 협업를 위한 코멘트(@comment)가 PAGEDOC에 추가되었습니다.
+- @stats 는 "진행예정" , "진행중" , "퍼블완료" , "삭제됨" 으로 구분합니다.
+- @comment 는 협업자에게 전달해야 될 내용이나, 수정이력을 작성합니다.
+- 자세한 사항은 [PAGEDOC](./@convention/pagedoc.md)를 참고하세요.
+
+
 ## 업데이트 이력 v0.8.4
 - [bugfix] ```<include></include>``` 구문에서 ejs 연결시 html로 변환 안되던 현상 수정
-
-
 
 ## 업데이트 이력 v0.8.3b
 - 인스톨(npx) 시 git제외조건 파일 삭제처리.
