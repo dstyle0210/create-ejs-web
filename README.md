@@ -219,11 +219,25 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 <div style="height:50px"></div>
 
+## 업데이트 이력 v0.8.6
+- ejs 의 값을 던져주는 어트리뷰트 명을 props도 추가하였습니다. (기존 options도 사용 가능합니다.)
+- 만약 둘다 선언시, 맨 처음에 선언된 "props" 또는 "options" 만 적용 됩니다.
+```
+<include props="전달객체"></include> # (O)
+<include options="전달객체"></include> # (O)
+
+# {name:'홍길동'} 이 전달된다.
+<include props="{name:'홍길동'}" options="{name:'사용자'}"></include>
+```
+- /pages/ 가 아닌 다른곳에서 가져오는 PAGEDOC는 컴파일 될때 삭제 됩니다.
+
+
 ## 업데이트 이력 v0.8.5
 - 페이지의 상태(@stats)와 협업를 위한 코멘트(@comment)가 PAGEDOC에 추가되었습니다.
 - @stats 는 "진행예정" , "진행중" , "퍼블완료" , "삭제됨" 으로 구분합니다.
 - @comment 는 협업자에게 전달해야 될 내용이나, 수정이력을 작성합니다.
 - 자세한 사항은 [PAGEDOC](./@convention/pagedoc.md)를 참고하세요.
+
 
 
 ## 업데이트 이력 v0.8.4

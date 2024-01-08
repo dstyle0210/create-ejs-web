@@ -50,11 +50,11 @@ const ejsCompileToHtml = async (options:{src:string,dist:string},callerName?:str
     const distPath = options.dist.replace(".ejs",".html"); // 저징될 경로(파일명 포함) , .ejs 인경우, .html로 변환 됨.
 
     let _htmlRaw = htmlRaw
-        .replace(/(<include)\s*(src=("|'))(.+)("|')\s*(options=("|'))(.+)(("|'))\s*(\/)?(>)(<\/include>)?/gi,"<%-include(`$4`,$8) %>") // 옵션이 포함된 인클루드 구문 변환
+        .replace(/(<include)\s*(src=("|'))(.+)("|')\s*((props|options)=("|'))(.+)(("|'))\s*(\/)?(>)(<\/include>)?/gi,"<%-include(`$4`,$9) %>") // 옵션이 포함된 인클루드 구문 변환
         .replace(/(<include)\s*(src=("|'))(.+)("|')\s*(\/)?(>)(<\/include>)?/gi,"<%-include(`$4`) %>") // 옵션이 없는 인클루드 구문 변환
         .replace(/(include\(`)(.+)(.ejs)(`)/gi,"$1$2.html$4"); // ejs로 로드 했을경우, html파일로 변환
-    if(!isPage) _htmlRaw.replace(/(<!-- HTMLDOC)((?!-->)[\n\d\D])*(-->)/gi,""); // 페이지가 아니라면, HTMLDOC 삭제
-
+    _htmlRaw = (!isPage) ? _htmlRaw.replace(/(<!-- PAGEDOC)((?!-->)[\n\d\D])*(-->)/gi,"") : _htmlRaw; // 페이지가 아니라면, PAGEDOC 삭제
+    
     fs.mkdirSync(path.dirname(distPath),{recursive:true}); // 저장할 폴더 생성
     fs.writeFileSync(distPath,_htmlRaw,{encoding:"utf8"}); // 파일 저장
     console.log(`${timeStamp().task}[${callerName}] ${options.src}`);

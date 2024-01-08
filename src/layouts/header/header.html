@@ -1,3 +1,11 @@
+<!-- PAGEDOC
+@since 2023.01.08
+@author mabongpapa
+@page 공통헤더
+@desc 해당 PAGEDOC는 컴파일 시에 지워집니다.(/pages/ 안에 없음)
+@param {string} [title="페이지타이틀"] 페이지 제목
+@param {"main"|"sub"} [category="sub"] 카테고리 명칭
+-->
 <% 
     const title = locals.title ? locals.title : "페이지타이틀";
     const category = locals.category || "sub";
