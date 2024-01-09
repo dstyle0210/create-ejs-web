@@ -1,0 +1,12 @@
+<!-- PAGEDOC 
+@since 2024.01.09
+@page [S] 본문 바로가기 빠른이동
+@desc 웹접근성 및 탭(Tab)키를 통한 본문 빠른 이동 기능, body 바로 밑에 넣는걸 권장
+@param {string} [text="본문 바로가기"] 포커스 시 나오는 문구
+-->
+<% 
+    const text = locals.text ?? "본문 바로가기";
+%>
+<!-- [S] 본문 바로가기 빠른이동 -->
+<div class="s-skipHeader"><a href="#mainContent" class="skipNav"><span><%=text %></span></a></div>
+<!-- // [S] 본문 바로가기 빠른이동 -->

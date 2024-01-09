@@ -219,6 +219,10 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 <div style="height:50px"></div>
 
+## 업데이트 이력 v0.8.7 (진행중)
+- skip navigation 이 추가되었습니다. (./src/uikit/section/skipNav)
+
+
 ## 업데이트 이력 v0.8.6
 - ejs 의 값을 던져주는 어트리뷰트 명을 props도 추가하였습니다. (기존 options도 사용 가능합니다.)
 - 만약 둘다 선언시, 맨 처음에 선언된 "props" 또는 "options" 만 적용 됩니다.
