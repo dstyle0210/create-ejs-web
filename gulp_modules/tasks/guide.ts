@@ -45,6 +45,39 @@ const mdToEjsHtml = (options:{src:string,dist:string},callerName?:string):Promis
     });
 }
 
+const getMatchText = (str:string,reg:RegExp) => str.match(reg) ? str.match(reg)[0] : "null";
+const crawler = async (options:{base:string,src:string|string[]}):Promise<{name:string,devUrl:string,buildUrl:string}[]> => {
+    const guideMap:{name:string,devUrl:string,buildUrl:string}[] = [];
+    const addGuideMapp = (name:string,pageOption:{
+            devUrl:string,
+            buildUrl:string
+        }) => {
+            guideMap.push({
+                name,
+                devUrl:pageOption.devUrl.replace(options.base,""),
+                buildUrl:pageOption.buildUrl.replace(options.base,"")
+            });
+        };
+
+    const srcs = await glob(options.src);
+    for await (const src of srcs){
+        // md 원본 추출
+        const mdRaw = fs.readFileSync(src,"utf8");
+        const name = getMatchText(mdRaw,/(\#\s)(.+)/g).replace("# ","");
+        addGuideMapp(name,{
+            devUrl:src.replace(".md",".html"),
+            buildUrl:src.replace(".md",".html"),
+        })
+    };
+    return guideMap;
+};
+export const save = async (options:{base:string,src:string|string[]},jsonSavePath:string):Promise<void> => {
+    const pageMap = await crawler(options);
+    fs.mkdirSync(path.dirname(jsonSavePath),{recursive:true}); // 저장할 폴더 생성
+    fs.writeFileSync(jsonSavePath,JSON.stringify(pageMap),"utf8"); // 파일 저장
+    console.log(`${timeStamp().task}[Guide:save] ${pageMap.length} page crawlings`);
+}
+
 
 export const libCopy = () => {
     return src(Config.guideOptions.base+"/**/*.{css,js}").pipe(dest(Config.guideOptions.dist));
@@ -53,10 +86,12 @@ export const libCopy = () => {
 export const compiler = async (options:{base:string,src:string|string[],dist:string}):Promise<void> => {
     const srcs = await glob(options.src);
     for await (const srcPath_ of srcs){
-        const {src , dist} = getSrcDist(Object.assign(options,{src:srcPath_}));
+        const {src , dist} = getSrcDist({base:options.base,dist:options.dist,src:srcPath_});
         const save = dist.replace(/((.md)|(.ejs))$/g,".html"); // 저징될 경로(파일명 포함) , .md, .ejs 인경우, .html로 변환 됨.
         await mdToEjsHtml({src,dist:save},"Guide:Compiler");
     };
+
+    await crawler(options);
 };
 
 export const watcher = (options:{base:string,src:string|string[],dist:string}):Promise<void> => {

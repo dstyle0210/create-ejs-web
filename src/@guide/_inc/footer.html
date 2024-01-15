@@ -10,7 +10,7 @@ $(()=>{
 
         const code = uikit.innerHTML.replace(/(\n\n)/gi,"");
         const $blockTemplate = $(`
-        <section class="codeBlock highlight" id="codeBlock${idx}">
+        <section class="codeBlock" id="codeBlock${idx}">
             <i class="codeIcon"></i>
             <div class="code">
                 <pre><code class="language-html"></code></pre>
@@ -29,6 +29,11 @@ $(()=>{
             $codeBlock.hide();
         });
     });
+
+    $("code[class^=language-]").parents("pre").each((idx,pre)=>{
+        $(pre).wrap("<div class='highlight'></div>");
+    });
+
     hljs.highlightAll();
 });
 </script>

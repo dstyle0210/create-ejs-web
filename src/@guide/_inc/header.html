@@ -21,12 +21,15 @@
 <div class="guideWrapper">
     <div class="nav">
         <div class="menu">
-            <h2><a href="@src/@guide/index.html">인덱스</a></h2>
-            <h2>UIKIT</h2>
-            <h3>ATOM</h3>
-            <ul>
-                <li><a href="@src/uikit/atom/btn/btn.guide.html">버튼</a></li>
-            </ul>
+            <ul class="nav" id="nav"></ul>
+            <script>
+                $(()=>{
+                    $.getJSON("/@guide/guideMap.json",(res)=>{
+                        const nav = res.map((guidePage)=>`<li><a href='${guidePage.devUrl}'>${guidePage.name}</a></li>`);
+                        $("#nav").append(nav);
+                    });
+                });
+            </script>
         </div>
     </div>
     <main class="mainContent markdown-body" id="mainContent">

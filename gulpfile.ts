@@ -40,9 +40,16 @@ copys.forEach((taskItem)=>{
         done();
     });
 });
+
+// 가이드용 테스크
 task("guide:libCopy",async (done)=>{
     const module = await import("./gulp_modules/tasks/guide");
     await module.libCopy();
+    done();
+});
+task("guide:save",async (done)=>{
+    const module = await import("./gulp_modules/tasks/guide");
+    await module.save(Config.guideOptions,Config.guideJson); // 개발서버 루트폴더(.pub)에 저장된다.
     done();
 });
 

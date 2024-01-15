@@ -2,9 +2,14 @@
 .markdown-body p{font-size:14px;color:#6e7781;}
 
 /*! Layout */
-.guideWrapper{display:flex;width:100%;min-width:320px;}
+.guideWrapper{display:flex;width:100%;min-width:320px;font-size:14px;}
 
+
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
 .nav{width:250px;flex:0 0 250px;background:#1b1c1d;color:#fff;}
+.nav a{color:#fff;}
+
 .menu{height:100vh;}
 .mainContent{flex:1;padding:20px;}
 
