@@ -1,0 +1,25 @@
+<!-- PAGEDOC
+@author Mabongpapa
+@page [A] 버튼
+@param {string} [text=""] 버튼명
+@param {"xxs","xs","sm","nm","lg","xl","xxl"} [size="nm"] 버튼의 크기
+-->
+<%
+    // props
+    const presetMap = { // 단축,공통 선언인 프리셋 설정
+        "null":{}, // 프리셋이 없는경우, 잘못된 프리셋인경우
+        "submit":{color:"red",text:"확인"},
+        "cancel":{color:"gray",text:"취소"}
+    };
+    let props = Object.assign(presetMap[locals.preset ?? "null"],locals); // 프리셋으로 설정된 옵션에, 전달받은 값 업데이트
+    let {text,size,color,preset} = props; // 객체분해 할당
+
+    // computed
+    const _text = text ?? "";
+    const _modifiers = {
+        size:size ? "-"+size : "",
+        color:color ? "-"+color : ""
+    };
+    const _class = Object.values(_modifiers).join(" ");
+%>
+<button class="a-btn <%=_class %>"><%=_text %></button>

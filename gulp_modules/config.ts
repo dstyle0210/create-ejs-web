@@ -53,10 +53,12 @@ export const libOptions = {
 }
 
 // 가이드 작성 옵션
+export const guideHeader = "./src/@guide/_inc/header.html"; // 가이드 레이아웃 헤더
+export const guideFooter = "./src/@guide/_inc/footer.html"; // 가이드 레이아웃 풋터
 export const guideOptions = {
-    src:srcRoot+"/@guide/**/*.md",
-    base:srcRoot+"/@guide",
-    dist:devServerRoot+"/@guide"
+    src:[srcRoot+"/@guide/**/*.md",srcRoot+"/**/*.guide.md"],
+    base:srcRoot,
+    dist:devServerRoot
 }
 
 /**

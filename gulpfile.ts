@@ -22,7 +22,7 @@ compilers.forEach((taskItem)=>{
 
 
 // 감시자 테스크 등록
-const watchers = [html,scss,ts,image];
+const watchers = [html,scss,ts,image,guide];
 watchers.forEach((taskItem)=>{
     task(`${taskItem.name}:watcher`,async (done)=>{
         const module:IWatcherTask = await import("./gulp_modules/tasks/"+taskItem.module);
@@ -39,6 +39,11 @@ copys.forEach((taskItem)=>{
         await module.copy(taskItem.options);
         done();
     });
+});
+task("guide:libCopy",async (done)=>{
+    const module = await import("./gulp_modules/tasks/guide");
+    await module.libCopy();
+    done();
 });
 
 // 산출물 빌드
@@ -74,7 +79,7 @@ task("sitemap",series("html:compiler","sitemap:save"));
 // 실무용 통합 Task
 const compilerSeries = compilers.map((taskItem)=>taskItem.name+":compiler");
 const watcherSeries = watchers.map((taskItem)=>taskItem.name+":watcher");
-task("compile",series("lib:copy",...compilerSeries,"image:copy"));
+task("compile",series("lib:copy","guide:libCopy",...compilerSeries,"image:copy"));
 task("watch",series(...watcherSeries));
 
 // 퍼블시작

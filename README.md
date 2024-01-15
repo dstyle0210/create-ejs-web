@@ -219,7 +219,18 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 <div style="height:50px"></div>
 
-## 업데이트 이력 v0.8.7 (진행중)
+## 업데이트 이력 v0.9.0
+- 가이드 기능이 강력해졌습니다!
+- 이제 소스폴더(./src) 내에서 어떤 폴더든 *.guide.md 파일을 만들어 낼수 있습니다.
+- 가이드 파일은 markdown 이지만, ejs 이기도 합니다! (include가 된다는 말입니다.)
+- 자세한 사항은 [guide](./@convention/guide.md)를 참고하세요.
+- 예제는 [btn.guide.md](./src/uikit/atom/btn/btn.guide.md) 을 참고하세요.
+
+### v0.9.0 실험실
+- "@src" 을 통한 src폴더추적 기능이 구현중입니다.
+
+
+## 업데이트 이력 v0.8.7
 - skip navigation 이 추가되었습니다. (./src/uikit/section/skipNav)
 
 

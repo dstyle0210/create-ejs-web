@@ -1,0 +1,41 @@
+// 기본값 설정
+$btn-radius:6px;
+
+// 버튼 기본형태
+.a-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 11px;
+    height: 44px;
+    font-size: 14px;
+    vertical-align: middle;
+    white-space:nowrap;
+    border:1px solid transparent;
+    cursor:pointer;
+    border-radius:$btn-radius;
+    background:#f5f5f5;
+
+    // 크기별
+    &.-xxs{padding:0 8px;height:24px;border-radius:4px;font-size:11px;}
+    &.-xs{padding:0 12px;height:32px;border-radius:4px;font-size:12px;}
+    &.-sm{padding:0 12px;height:38px;border-radius:4px;font-size:13px;}
+    &.-nm{padding:0 12px;height:44px;border-radius:6px;font-size:14px;}
+    &.-lg{padding:0 12px;height:48px;border-radius:8px;font-size:16px;}
+    &.-xl{padding:0 16px;height:56px;border-radius:8px;font-size:18px;}
+    &.-xxl{padding:0 20px;height:68px;border-radius:12px;font-size:22px;}
+
+    // 색상별
+    $a-btn-colors:(
+        "dark":#000,
+        "gray":#666,
+        "red":#fa2239,
+        "purple":#a420e0
+    );
+    @each $color, $value in $a-btn-colors{
+        &.-#{$color}{background-color:$value;color:#fff;}
+    }
+
+    // 비활성화
+    &.-disabled{opacity:0.5;cursor:normal;}
+}

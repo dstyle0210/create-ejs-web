@@ -1,5 +1,37 @@
-</div><!-- // .markdown-body -->
-</main>
-<script>hljs.highlightAll();</script>
+</main><!-- // .mainContent -->
+</div><!-- // .guideWrapper -->
+<script>
+$(()=>{
+    $(".example").each((idx,uikit)=>{
+        const $uikit = $(uikit);
+        $uikit.wrap(`<div class='pane' id='pane${idx}'></div>`);
+        $uikit.prepend(`<i class="codeIcon"></i>`);
+        const $pane = $(`#pane${idx}`);
+
+        const code = uikit.innerHTML.replace(/(\n\n)/gi,"");
+        const $blockTemplate = $(`
+        <section class="codeBlock highlight" id="codeBlock${idx}">
+            <i class="codeIcon"></i>
+            <div class="code">
+                <pre><code class="language-html"></code></pre>
+            </div>
+        </section>`);
+        $blockTemplate.find("code").text(code.replace(`<i class="codeIcon"></i>`,"").trim());
+        $pane.append($blockTemplate);
+        const $codeBlock = $(`#codeBlock${idx}`);
+
+        $uikit.find(".codeIcon").on("click",()=>{
+            $uikit.hide();
+            $codeBlock.show();
+        });
+        $codeBlock.find(".codeIcon").on("click",()=>{
+            $uikit.show();
+            $codeBlock.hide();
+        });
+    });
+    hljs.highlightAll();
+});
+</script>
+
 </body>
 </html>
