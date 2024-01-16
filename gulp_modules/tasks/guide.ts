@@ -6,6 +6,7 @@
  * --------------------------
  * 2024.01.02 : Mabongpapa : 최초생성
  */
+import type {IServer} from "../@types/gulpfile.d";
 import path from "path";
 import fs from "fs";
 import glob from "fast-glob";
@@ -16,6 +17,8 @@ import timeStamp from "../util/getTimeStamp";
 import getSrcDist from "../util/getSrcDist";
 import pretty from "pretty";
 import cEjs from "../util/customEjsToEjs";
+import findPidFromPort from "../util/findPidFromPort";
+import asyncRequest from "../util/asyncRequestPrettyHtml"; // URL to HTML
 
 const getSrcRelative = (srcPath:string) => path.relative(path.dirname(srcPath),path.resolve(__dirname,"../../","src")).replace(/\\/gi,"/");
 const mdToEjsHtml = (options:{src:string,dist:string},callerName?:string):Promise<void> => {
@@ -79,8 +82,11 @@ export const save = async (options:{base:string,src:string|string[]},jsonSavePat
 }
 
 
-export const libCopy = () => {
-    return src(Config.guideOptions.base+"/**/*.{css,js}").pipe(dest(Config.guideOptions.dist));
+export const libCopy = async () => {
+    return src(Config.guideLibOptions.src).pipe(dest(Config.guideLibOptions.dist));
+}
+export const libDistCopy = async () => {
+    return src(Config.guideLibDistOptions.src).pipe(dest(Config.guideLibDistOptions.dist));
 }
 
 export const compiler = async (options:{base:string,src:string|string[],dist:string}):Promise<void> => {
@@ -107,13 +113,36 @@ export const watcher = (options:{base:string,src:string|string[],dist:string}):P
     });
 };
 
-export const dist = (options:{base:string,src:string|string[],dist:string}):Promise<void> => {
-    return new Promise((resolve,reject) => {
-        src(options.src,{base:options.base})
-        // TODO : 디플로이 변환로직 추가 필요.
-        .pipe(dest(options.dist))
-        .on("end",()=>{
-            resolve();
-        })
+// 시작시 전체 컴파일용
+export const dist = (options:{src:string|string[],base:string,dist:string}):Promise<void> => {
+    return new Promise(async (resolve,reject) => {
+        const guideMap = await crawler(options);
+
+        // 개발서버 실행(기존에 실행되어 있다면 미동작)
+        let pid = await findPidFromPort(Config.devPort); // 서버실행 여부 확인
+        let isDevServerReady = !!pid; // 서버가 있다면 true , 없으면 false.
+        if(!isDevServerReady){ // 서버가 없었으면 실행 시킨다.
+            const server:IServer = await import("../servers/server");
+            await server.dev({root:options.base,port:Config.devPort});
+        };
+        
+        for await (const page of guideMap){
+            const url = `http://localhost:${Config.devPort}${page.devUrl}`;
+            const htmlRaw = await asyncRequest(url);
+            const buildPath = Config.buildServerRoot+page.buildUrl;
+            fs.mkdirSync(path.dirname(buildPath),{recursive:true});
+            fs.writeFileSync(buildPath,htmlRaw,"utf8");
+            console.log(`${timeStamp().task}[guide:dist] ${buildPath}`);
+        };
+
+        if(!isDevServerReady){
+            pid = await findPidFromPort(Config.devPort); // 서버실행 여부 확인
+            setTimeout(()=>{
+                console.log(`${timeStamp().task}[guide:dist] process.kill , port ${Config.devPort}`);
+                process.kill(pid);
+            },2000);
+        };
+
+        resolve();
     });
-}
+};

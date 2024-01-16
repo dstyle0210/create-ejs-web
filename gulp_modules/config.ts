@@ -53,13 +53,19 @@ export const libOptions = {
 }
 
 // 가이드 작성 옵션
-export const guideHeader = srcRoot+"/@guide/_inc/header.html"; // 가이드 레이아웃 헤더
-export const guideFooter = srcRoot+"/@guide/_inc/footer.html"; // 가이드 레이아웃 풋터
+export const guideBase = srcRoot+"/@guide";
+export const guideHeader = guideBase+"/_inc/header.html"; // 가이드 레이아웃 헤더
+export const guideFooter = guideBase+"/_inc/footer.html"; // 가이드 레이아웃 풋터
 export const guideJson = devServerRoot+"/@guide/guideMap.json"; //가이드 파일 목록
 export const guideOptions = {
-    src:[srcRoot+"/@guide/**/*.md",srcRoot+"/**/*.guide.md"],
+    src:[guideBase+"/**/*.md",srcRoot+"/**/*.guide.md"],
     base:srcRoot,
     dist:devServerRoot
+}
+export const guideLibOptions = {
+    src:srcRoot+"/@guide/assets/**/*.{js,css}",
+    base:srcRoot+"/@guide/assets",
+    dist:devServerRoot+"/@guide/assets"
 }
 
 /**
@@ -67,7 +73,10 @@ export const guideOptions = {
  */
 export const buildServerRoot = "./build";
 export const buildPort = 3100; // 배포용 서버 포트 ( http://localhost:3100 )
-
+export const buildServerOptions = {
+    root:buildServerRoot,
+    port:buildPort
+}
 
 export const cssDistOptions = {
     src:scssOptions.dist+"/**/*.css",
@@ -96,7 +105,12 @@ export const htmlDistOptions = {
 
 // 가이드 작성 옵션
 export const guideDistOptions = {
-    src:devServerRoot+"/@guide/**/*.{html,css,js}",
-    base:devServerRoot+"/@guide",
-    dist:buildServerRoot+"/@guide"
+    src:[devServerRoot+"/@guide/**/*.html",devServerRoot+"/**/*.guide.html"],
+    base:devServerRoot,
+    dist:buildServerRoot
+}
+export const guideLibDistOptions = {
+    src:devServerRoot+"/@guide/assets/**/*.{js,css}",
+    base:devServerRoot+"/@guide/assets",
+    dist:buildServerRoot+"/@guide/assets"
 }

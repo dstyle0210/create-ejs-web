@@ -11,7 +11,7 @@ const lib = {name:"lib",module:"lib",options:Config.libOptions};
 const guide = {name:"guide",module:"guide",options:Config.guideOptions,dists:Config.guideDistOptions};
 
 // 컴파일 테스크 등록
-const compilers = [html,scss,ts,guide];
+const compilers = [html,scss,ts];
 compilers.forEach((taskItem)=>{
     task(`${taskItem.name}:compiler`,async (done)=>{
         const module:ICompilerTask = await import("./gulp_modules/tasks/"+taskItem.module);
@@ -22,7 +22,7 @@ compilers.forEach((taskItem)=>{
 
 
 // 감시자 테스크 등록
-const watchers = [html,scss,ts,image,guide];
+const watchers = [html,scss,ts,image];
 watchers.forEach((taskItem)=>{
     task(`${taskItem.name}:watcher`,async (done)=>{
         const module:IWatcherTask = await import("./gulp_modules/tasks/"+taskItem.module);
@@ -42,19 +42,27 @@ copys.forEach((taskItem)=>{
 });
 
 // 가이드용 테스크
-task("guide:libCopy",async (done)=>{
+task("guide:compiler",async (done)=>{
     const module = await import("./gulp_modules/tasks/guide");
     await module.libCopy();
+    await module.compiler(Config.guideOptions);
+    await module.save(Config.guideOptions,Config.guideJson); // 개발서버 루트폴더(.pub)에 저장된다.
     done();
 });
-task("guide:save",async (done)=>{
+task("guide:watcher",async (done)=>{
     const module = await import("./gulp_modules/tasks/guide");
-    await module.save(Config.guideOptions,Config.guideJson); // 개발서버 루트폴더(.pub)에 저장된다.
+    await module.watcher(Config.guideOptions); // 개발서버 루트폴더(.pub)에 저장된다.
+    done();
+});
+task("guide:dist",async (done)=>{
+    const module = await import("./gulp_modules/tasks/guide");
+    await module.libDistCopy(); // 개발서버 루트폴더(.pub)에 저장된다.
+    await module.dist(Config.guideDistOptions); // 개발서버 루트폴더(.pub)에 저장된다.
     done();
 });
 
 // 산출물 빌드
-const dists = [html,scss,ts,image,guide];
+const dists = [html,scss,ts,image];
 dists.forEach((taskItem)=>{
     task(`${taskItem.name}:dist`,async (done)=>{
         const module:IDistTask = await import("./gulp_modules/tasks/"+taskItem.module);
@@ -67,6 +75,11 @@ dists.forEach((taskItem)=>{
 task("server:dev",async (done)=>{
     const server:IServer = await import("./gulp_modules/servers/server");
     await server.dev(Config.devServerOptions);
+    done();
+});
+task("server:build",async (done)=>{
+    const server:IServer = await import("./gulp_modules/servers/server");
+    await server.build(Config.buildServerOptions);
     done();
 });
 
@@ -86,11 +99,11 @@ task("sitemap",series("html:compiler","sitemap:save"));
 // 실무용 통합 Task
 const compilerSeries = compilers.map((taskItem)=>taskItem.name+":compiler");
 const watcherSeries = watchers.map((taskItem)=>taskItem.name+":watcher");
-task("compile",series("lib:copy","guide:libCopy",...compilerSeries,"image:copy"));
+task("compile",series("lib:copy",...compilerSeries,"image:copy","guide:compiler"));
 task("watch",series(...watcherSeries));
 
 // 퍼블시작
-task("dev",series("watch","guide:compiler","compile","sitemap:save","server:dev"));
+task("dev",series("watch","compile","sitemap:save","server:dev"));
 
 // 통합빌드
 task("html:build",series("html:compiler","html:dist"));
