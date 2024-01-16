@@ -115,18 +115,20 @@ gulp html:compiler
 ```
 ./src
 +-- /@guide // 웹퍼블리싱 가이드
-|   +-- lib // 코드스니핏 및 markdown css
+|   +-- /assets // 가이드에 사용되는 css 등
+|   |   +-- /lib // 코드스니핏 및 markdown css
 |   +-- index.md // 가이드 인덱스 마크다운
 +-- /assets
-|   +-- scss // scss을 모아주는(@import) 엔트리 성격의 scss
-|   +-- ts // typescript을 모아주는(import) 엔트리 성격의 ts
-|   +-- lib // 라이브러리 들
+|   +-- /scss // scss을 모아주는(@import) 엔트리 성격의 scss
+|   +-- /ts // typescript을 모아주는(import) 엔트리 성격의 ts
+|   +-- /lib // 라이브러리 들
 +-- /layouts
-|   +-- header // 헤더 공통 영역
-|   +-- footer // 풋터 공통 영역
+|   +-- /header // 헤더 공통 영역
+|   +-- /footer // 풋터 공통 영역
 +-- /pages // 페이지
-|   +-- main // 메인 페이지
-|   +-- sub // 서브 페이지 들
+|   +-- /main // 메인 페이지
+|   +-- /sub // 서브 페이지 들
++-- /uikit // 컴포넌트 모음
 +-- index.html // 초기 접속페이지
 +-- sitemap.html // 사이트맵
 ```
@@ -219,66 +221,23 @@ ejs의 include 구문을 적용하면 에디터(ex : vscode)의 팔로우링크(
 
 <div style="height:50px"></div>
 
-## 업데이트 이력 v0.9.0
+## v0.9.x 업데이트 이력
+
+### v0.9.x 진행중 (TO-DO or TASKs)
+- "@src" 을 통한 src path 기능이 구현중입니다.
+- ```./src/assets/ts``` 안에서 js 파일 호환가능
+- ```./src/assets/scss``` 안에서 css 파일 호환가능
+
+### v0.9.0 업데이트 이력 
 - 가이드 기능이 강력해졌습니다!
-- 이제 소스폴더(./src) 내에서 어떤 폴더든 *.guide.md 파일을 만들어 낼수 있습니다.
+- 이제 소스폴더(./src) 내에서 어떤 폴더든 *.guide.md 파일로 설명서를 만들수 있습니다.
 - 가이드 파일은 markdown 이지만, ejs 이기도 합니다! (include가 된다는 말입니다.)
 - 자세한 사항은 [guide](./@convention/guide.md)를 참고하세요.
 - 예제는 [btn.guide.md](./src/uikit/atom/btn/btn.guide.md) 을 참고하세요.
 
-### v0.9.0 실험실
-- "@src" 을 통한 src폴더추적 기능이 구현중입니다.
+<div style="height:50px"></div>
 
-
-## 업데이트 이력 v0.8.7
-- skip navigation 이 추가되었습니다. (./src/uikit/section/skipNav)
-
-
-## 업데이트 이력 v0.8.6
-- ejs 의 값을 던져주는 어트리뷰트 명을 props도 추가하였습니다. (기존 options도 사용 가능합니다.)
-- 만약 둘다 선언시, 맨 처음에 선언된 "props" 또는 "options" 만 적용 됩니다.
-```
-<include props="전달객체"></include> # (O)
-<include options="전달객체"></include> # (O)
-
-# {name:'홍길동'} 이 전달된다.
-<include props="{name:'홍길동'}" options="{name:'사용자'}"></include>
-```
-- /pages/ 가 아닌 다른곳에서 가져오는 PAGEDOC는 컴파일 될때 삭제 됩니다.
-
-
-## 업데이트 이력 v0.8.5
-- 페이지의 상태(@stats)와 협업를 위한 코멘트(@comment)가 PAGEDOC에 추가되었습니다.
-- @stats 는 "진행예정" , "진행중" , "퍼블완료" , "삭제됨" 으로 구분합니다.
-- @comment 는 협업자에게 전달해야 될 내용이나, 수정이력을 작성합니다.
-- 자세한 사항은 [PAGEDOC](./@convention/pagedoc.md)를 참고하세요.
-
-
-
-## 업데이트 이력 v0.8.4
-- [bugfix] ```<include></include>``` 구문에서 ejs 연결시 html로 변환 안되던 현상 수정
-
-## 업데이트 이력 v0.8.3b
-- 인스톨(npx) 시 git제외조건 파일 삭제처리.
-- 인스톨 이후 나오는 설명 수정
-
-
-## 업데이트 이력 v0.8.3
-- 인스톨 시 삭제를 위한 모듈(rimraf)이 추가되었습니다.
-- HTML 배포시 포메팅이 되도록 변경되었습니다.(page , sitemap, guide)
-- 포멧팅 : html이 이쁘게 나오도록(1tab , 4space) 처리
-
-## 업데이트 이력 v0.8.2
-- 설명 일부가 변경 되었습니다.
-- guide 가 컴파일 됩니다. (```npm run guide```)
-- guide는 퍼블리싱 산출물 제출을 위한 설명용도 입니다.
-- 자세한 사항은 [guide](./@convention/guide.md)를 참고하세요.
-
-## 업데이트 이력 v0.8.1
-- 설명 일부가 변경 되었습니다.
-
-## 업데이트 이력 v0.8.0
-- 산출물을 위한 빌드가 가능합니다!
-- 빌드는 ```npm run build``` 로 실행 가능합니다.
-- 빌드는 src의 자료를 순수 html,js,css 파일로 ```./build``` 폴더에 저장 됩니다!
-- 빌드하면, sitemap 도 함께 저장되어, build 폴더를 통해 링크 이동이 가능합니다.
+## 앞으로 만들어질 기능들
+- sitemap:save 될 때 PAGEDOC 누락파일 검사
+- build 될 때 스크립트 오류 페이지 결과 리포트
+- build 될 때 W3C 검사도 함께 리포트

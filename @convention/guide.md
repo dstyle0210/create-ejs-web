@@ -8,10 +8,11 @@
 
 ## 작성법
 - markdown(.md)파일로 작성이 가능합니다.
+- 산출물을 위한 ejs 구문이 사용가능합니다.
 - ```./src/@guide/_inc``` 내 ```header.html``` 와 ```footer.html``` 이 더 해집니다.
-- 공통파일은 지정(header.html , footer.html) 되어있으며, 변경 불가합니다.
+- 위의 헤더,풋터파일은 config.ts 에서 변경,수정가능합니다.(삭제는 안됩니다.)
 - [github-markdown-light.css](https://github.com/sindresorhus/github-markdown-css) 테마를 기본으로 가지고 있습니다.
-- [highlightjs](https://highlightjs.org/) 테마를 기본으로 가지고 있습니다.
+- [highlightjs](https://highlightjs.org/)의 vs2015 테마를 기본으로 가지고 있습니다.
 - markdown link 기능 ```[링크명](링크주소)``` 은 .md가 .html로 변환 됩니다.
 
 ## 사용법
